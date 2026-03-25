@@ -1,31 +1,68 @@
-// ===== SCROLL PROGRESS BAR =====
-    // Function: updateScrollProgress()
-    // Purpose: Grow the top fixed progress bar from 0% to 100% as the user scrolls
+/* ===== SCROLL PROGRESS BAR LOGIC ===== */
+    /* Updates the top progress indicator based on viewport scroll position */
     function updateScrollProgress() {
-      const bar = document.getElementById('progress-bar');
-      const doc = document.documentElement;
-      const scrollTop = doc.scrollTop || document.body.scrollTop;
-      const scrollHeight = doc.scrollHeight - doc.clientHeight;
-      const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-      bar.style.width = pct + '%';
+      const progress = document.getElementById('scrollProgress');
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progress.style.width = pct + '%';
     }
 
-    // ===== NAV SHADOW STATE =====
-    // Function: updateNavShadow()
-    // Purpose: Add a subtle shadow to the sticky nav after scrolling past 50px
-    function updateNavShadow() {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('scrolled', window.scrollY > 50);
+    /* ===== NAV GLASS EFFECT LOGIC ===== */
+    /* Adds subtle translucency and shadow once the page is scrolled */
+    function handleNavGlass() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 10) {
+        header.classList.add('shadow-lg');
+      } else {
+        header.classList.remove('shadow-lg');
+      }
     }
 
-    // ===== SMOOTH SCROLL LINKS =====
-    // Function: enableSmoothScroll()
-    // Purpose: Handle all in-page anchor navigation with consistent smooth scrolling
-    function enableSmoothScroll() {
-      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    /* ===== INTERSECTION OBSERVER REVEAL LOGIC ===== */
+    /* Reveals feature cards and testimonial blocks when entering the viewport */
+    function initRevealAnimations() {
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el => io.observe(el));
+    }
+
+    /* ===== COUNT-UP ANIMATION LOGIC ===== */
+    /* Animates stat counters from 0 to target value for impact */
+    function initCountUp() {
+      const items = document.querySelectorAll('.countup');
+      const io = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          const target = parseInt(el.dataset.target, 10) || 0;
+          let current = 0;
+          const duration = 1200;
+          const start = performance.now();
+          function tick(now) {
+            const p = Math.min((now - start) / duration, 1);
+            current = Math.floor(target * (0.2 + 0.8 * p));
+            el.textContent = current;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = target;
+          }
+          requestAnimationFrame(tick);
+          observer.unobserve(el);
+        });
+      }, { threshold: 0.6 });
+      items.forEach(item => io.observe(item));
+    }
+
+    /* ===== SMOOTH SCROLL LOGIC ===== */
+    /* Smoothly scrolls to anchored sections without abrupt jumps */
+    function initSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
-          const targetId = this.getAttribute('href');
-          const target = document.querySelector(targetId);
+          const target = document.querySelector(this.getAttribute('href'));
           if (target) {
             e.preventDefault();
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -34,168 +71,164 @@
       });
     }
 
-    // ===== FADE-UP REVEAL =====
-    // Function: setupFadeUpObserver()
-    // Purpose: Reveal elements with .fade-up when they enter the viewport
-    function setupFadeUpObserver() {
-      const items = document.querySelectorAll('.fade-up');
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      }, { threshold: 0.15 });
-      items.forEach(function(item, index) {
-        item.style.transitionDelay = (index * 0.1) + 's';
-        observer.observe(item);
-      });
-    }
-
-    // ===== COUNT-UP ANIMATION =====
-    // Function: animateCountUp(el)
-    // Purpose: Animate numeric statistic counters from 0 to target value
-    function animateCountUp(el) {
-      const target = parseInt(el.getAttribute('data-target'), 10) || 0;
-      const duration = 1500;
-      const start = performance.now();
-      function tick(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        el.textContent = Math.floor(progress * target).toString();
-        if (progress < 1) requestAnimationFrame(tick);
-        else el.textContent = target.toString();
-      }
-      requestAnimationFrame(tick);
-    }
-
-    // ===== STAT COUNTER OBSERVER =====
-    // Function: setupCountObserver()
-    // Purpose: Trigger count-up animation once each metric enters the viewport
-    function setupCountObserver() {
-      const counters = document.querySelectorAll('.count-num');
-      const seen = new WeakSet();
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting && !seen.has(entry.target)) {
-            seen.add(entry.target);
-            animateCountUp(entry.target);
-          }
-        });
-      }, { threshold: 0.5 });
-      counters.forEach(function(counter) { observer.observe(counter); });
-    }
-
-    // ===== CART SIDEBAR STATE =====
-    // Function: openCart()
-    // Purpose: Slide cart drawer into view and lock body scroll
-    function openCart() {
-      sidebar.style.right = '0';
-      overlay.style.display = 'block';
-      document.body.style.overflow = 'hidden';
-    }
-
-    // Function: closeCartFn()
-    // Purpose: Hide cart drawer and restore page scrolling
-    function closeCartFn() {
-      sidebar.style.right = '-400px';
-      overlay.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    // Function: updateCart()
-    // Purpose: Refresh cart count, cart contents, and total value
-    function updateCart() {
-      cartCountEl.textContent = cartCount;
-      cartCountEl.style.display = cartCount > 0 ? 'flex' : 'none';
-      if (cartCount === 0) {
-        cartItemsEl.innerHTML = '<p style="color:#999;text-align:center;margin-top:40px;">Your cart is empty</p>';
-        cartTotalEl.textContent = '$0.00';
-      } else {
-        cartItemsEl.innerHTML = '<div style="display:flex;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid #f0f0f0"><img src="https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047" alt="BeerGater kit" style="width:80px;height:70px;object-fit:cover;border-radius:8px;"><div style="flex:1"><div style="font-weight:700;font-size:15px;color:#0a0e1a;">The Original BeerGater Kit</div><div style="color:#888;font-size:13px;margin-top:4px;">Qty: ' + cartCount + '</div></div><div style="font-weight:700;color:#C0392B;font-size:16px;">$' + (cartCount * cartPrice).toFixed(2) + '</div></div>';
-        cartTotalEl.textContent = '$' + (cartCount * cartPrice).toFixed(2);
-      }
-    }
-
-    // Function: showToast(message)
-    // Purpose: Display a temporary success notification for add-to-cart actions
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.remove('show');
-      void toast.offsetWidth;
-      toast.classList.add('show');
-    }
-
-    // ===== VIDEO SOUND TOGGLE =====
-    // Function: wireVideoSoundToggle()
-    // Purpose: Toggle muted/unmuted playback while restarting the video when enabling sound
-    function wireVideoSoundToggle() {
-      const vid = document.getElementById('heroVideo');
+    /* ===== VIDEO SOUND TOGGLE LOGIC ===== */
+    /* Enables or mutes the hero video audio state and updates button label */
+    function initVideoToggle() {
+      const video = document.getElementById('heroVideo');
       const btn = document.getElementById('soundBtn');
-      let soundOn = false;
-      btn.addEventListener('click', function() {
-        if (!soundOn) {
-          vid.muted = false;
-          vid.currentTime = 0;
-          vid.play();
-          btn.textContent = '🔇 Mute';
-          soundOn = true;
-        } else {
-          vid.muted = true;
-          btn.textContent = '🔊 Turn On Sound';
-          soundOn = false;
-        }
+      btn.addEventListener('click', () => {
+        video.muted = !video.muted;
+        btn.textContent = video.muted ? '🔇 Sound Off' : '🔊 Sound On';
       });
     }
 
-    // ===== CONTACT FORM SUCCESS HANDLER =====
-    // Function: wireContactForm()
-    // Purpose: Replace the form with a success state after submission
-    function wireContactForm() {
+    /* ===== CONTACT FORM SUBMISSION LOGIC ===== */
+    /* Displays a success message after form submission */
+    function initContactForm() {
       const form = document.getElementById('contactForm');
+      const msg = document.getElementById('formSuccess');
       form.addEventListener('submit', function(e) {
         e.preventDefault();
-        form.outerHTML = '<div class="mt-8 rounded-2xl bg-[#27ae60] text-white px-6 py-8 text-center font-bold text-lg">🍺 Thanks! We\'ll get back to you soon.</div>';
+        msg.classList.remove('hidden');
+        form.reset();
       });
     }
 
-    // ===== INITIALIZE INTERACTIONS =====
-    // Function: init()
-    // Purpose: Set up page-wide behaviors once DOM is ready
-    function init() {
-      updateCart();
-      updateNavShadow();
-      enableSmoothScroll();
-      setupFadeUpObserver();
-      setupCountObserver();
-      wireVideoSoundToggle();
-      wireContactForm();
+    /* ===== CART STATE LOGIC ===== */
+    /* Manages the cart sidebar, item count, and total display */
+    function initCart() {
+      const cartToggleBtn = document.getElementById('cartToggleBtn');
+      const closeCartBtn = document.getElementById('closeCartBtn');
+      const cartSidebar = document.getElementById('cartSidebar');
+      const cartOverlay = document.getElementById('cartOverlay');
+      const addToCartBtn = document.getElementById('addToCartBtn');
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      const buyNowBtn = document.getElementById('buyNowBtn');
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      let count = 0;
+      let total = 0;
 
-      window.addEventListener('scroll', function() {
-        updateScrollProgress();
-        updateNavShadow();
-      }, { passive: true });
+      function openCart() {
+        cartSidebar.classList.add('open');
+        cartOverlay.classList.remove('hidden');
+      }
 
-      document.getElementById('addToCartBtn').addEventListener('click', function() {
-        cartCount++;
-        updateCart();
+      function closeCart() {
+        cartSidebar.classList.remove('open');
+        cartOverlay.classList.add('hidden');
+      }
+
+      function addItem() {
+        count += 1;
+        total += 299.99;
+        cartCount.textContent = count;
+        cartItems.innerHTML = `
+          <div class="flex items-center gap-4 rounded-2xl border border-black/10 p-4">
+            <img src="https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047" alt="BeerGater" class="w-20 h-20 rounded-xl object-cover" />
+            <div class="flex-1">
+              <p class="font-bold">BeerGater</p>
+              <p class="text-sm text-[#334155]">Portable dual-tap system</p>
+              <p class="mt-2 font-semibold">$299.99</p>
+            </div>
+          </div>
+        `;
+        cartTotal.textContent = `$${total.toFixed(2)}`;
         openCart();
-        this.textContent = '✓ Added to Cart!';
-        showToast('✓ BeerGater Kit added to cart!');
-        const btn = this;
-        setTimeout(function() { btn.textContent = 'ADD TO CART 🛒'; }, 2000);
-      });
+      }
 
-      document.getElementById('closeCart').addEventListener('click', closeCartFn);
-      overlay.addEventListener('click', closeCartFn);
-      document.querySelector('.cart-icon-btn').addEventListener('click', openCart);
+      cartToggleBtn.addEventListener('click', openCart);
+      closeCartBtn.addEventListener('click', closeCart);
+      cartOverlay.addEventListener('click', closeCart);
+      addToCartBtn.addEventListener('click', addItem);
+      checkoutBtn.addEventListener('click', () => {
+        window.__processPayment({
+          amountCents: 29999,
+          email: '',
+          productName: 'BeerGater',
+          productDescription: 'Portable dual-tap system',
+          name: '',
+          quantity: 1
+        });
+      });
+      buyNowBtn.addEventListener('click', () => {
+        window.__processPayment({
+          amountCents: 29999,
+          email: '',
+          productName: 'BeerGater',
+          productDescription: 'Portable dual-tap system',
+          name: '',
+          quantity: 1
+        });
+      });
     }
 
-    // Expose values used by cart logic
-    let cartCount = 0;
-    const cartPrice = 299.99;
-    const sidebar = document.getElementById('cartSidebar');
-    const overlay = document.getElementById('cartOverlay');
-    const cartCountEl = document.getElementById('cart-count');
-    const cartItemsEl = document.getElementById('cartItems');
-    const cartTotalEl = document.getElementById('cartTotal');
+    /* ===== INITIALIZATION ===== */
+    /* Boots all page interactions after DOM content is available */
+    document.addEventListener('DOMContentLoaded', function() {
+      updateScrollProgress();
+      handleNavGlass();
+      initRevealAnimations();
+      initCountUp();
+      initSmoothScroll();
+      initVideoToggle();
+      initContactForm();
+      initCart();
+    });
 
-    document.addEventListener('DOMContentLoaded', init);
+    window.addEventListener('scroll', function() {
+      updateScrollProgress();
+      handleNavGlass();
+    });
+
+    /* ===== CUSTOM BEERGATER LAUNCHER ===== */
+    /* Adds animated assistant controls and routes interactions to the PayMeGPT widget */
+    (function() {
+      var menuOpen = false;
+      var mainBtn = document.getElementById('bg-main-btn');
+      var menu = document.getElementById('bg-menu');
+      var chatBtn = document.getElementById('bg-chat-btn');
+      var voiceBtn = document.getElementById('bg-voice-btn');
+      var tooltip = document.createElement('div');
+      tooltip.id = 'bg-tooltip';
+      tooltip.textContent = '🏈 Hey! Ask Tap anything!';
+      document.getElementById('bg-launcher').appendChild(tooltip);
+      setTimeout(function() { if (tooltip.parentNode) tooltip.parentNode.removeChild(tooltip); }, 5000);
+      mainBtn.addEventListener('click', function() {
+        menuOpen = !menuOpen;
+        menu.classList.toggle('open', menuOpen);
+        document.getElementById('bg-icon').textContent = menuOpen ? '✕' : '🍺';
+        document.getElementById('bg-label').textContent = menuOpen ? 'Close' : 'Ask Tap';
+      });
+      chatBtn.addEventListener('click', function() {
+        if (window.PayMeGPT && window.PayMeGPT.open) {
+          window.PayMeGPT.open({ mode: 'chat' });
+        } else {
+          window.open('https://paymegpt.com/agents/96369009', '_blank', 'width=420,height=680,scrollbars=no,resizable=yes');
+        }
+        menuOpen = false;
+        menu.classList.remove('open');
+        document.getElementById('bg-icon').textContent = '🍺';
+        document.getElementById('bg-label').textContent = 'Ask Tap';
+      });
+      voiceBtn.addEventListener('click', function() {
+        if (window.PayMeGPT && window.PayMeGPT.open) {
+          window.PayMeGPT.open({ mode: 'voice' });
+        } else {
+          window.open('https://paymegpt.com/agents/96369009', '_blank', 'width=420,height=680,scrollbars=no,resizable=yes');
+        }
+        menuOpen = false;
+        menu.classList.remove('open');
+        document.getElementById('bg-icon').textContent = '🍺';
+        document.getElementById('bg-label').textContent = 'Ask Tap';
+      });
+      document.addEventListener('click', function(e) {
+        if (menuOpen && !document.getElementById('bg-launcher').contains(e.target)) {
+          menuOpen = false;
+          menu.classList.remove('open');
+          document.getElementById('bg-icon').textContent = '🍺';
+          document.getElementById('bg-label').textContent = 'Ask Tap';
+        }
+      });
+    })();
