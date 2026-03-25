@@ -1,75 +1,64 @@
-/* ===== BASE TYPOGRAPHY & LAYOUT ===== */
-    /* Mobile-first spacing and brand-aligned colors */
+/* ===== GLOBAL BASE STYLES ===== */
+    /* Mobile-first spacing and smooth rendering */
     html { scroll-behavior: smooth; }
-    body { font-family: 'Nunito', sans-serif; background: #0a0e1a; color: #fff; overflow-x: hidden; }
-    h1, h2, h3, .font-oswald { font-family: 'Oswald', sans-serif; letter-spacing: 0.2px; }
+    body { font-family: 'Nunito', sans-serif; background:#0a0e1a; color:#fff; overflow-x:hidden; }
+    .oswald { font-family: 'Oswald', sans-serif; }
 
-    /* ===== SCROLL PROGRESS BAR ===== */
-    /* Fixed thin progress indicator at the very top of the viewport */
-    #progress-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 4px; z-index: 9999; background: rgba(255,255,255,0.05); }
-    #progress-bar { width: 0%; height: 100%; background: #C0392B; transition: width 0.08s linear; }
+    /* ===== PAYMEGPT BUBBLE HIDE STYLES ===== */
+    /* Hide default PayMeGPT launcher bubble so custom launcher remains the only visible trigger */
+    #paymegpt-widget-bubble, .paymegpt-bubble, [data-paymegpt-bubble] { display:none !important; }
 
-    /* ===== NAVIGATION BAR ===== */
-    /* Sticky brand nav with scroll elevation effect */
-    .site-nav { position: fixed; top: 4px; left: 0; right: 0; z-index: 9998; background: #0a0e1a; border-bottom: 1px solid rgba(255,255,255,0.06); transition: box-shadow 0.25s ease, backdrop-filter 0.25s ease; }
-    .site-nav.scrolled { box-shadow: 0 10px 30px rgba(0,0,0,0.35); backdrop-filter: blur(10px); }
-    .nav-link { color: rgba(255,255,255,0.95); text-transform: uppercase; letter-spacing: 1px; font-size: 13px; font-weight: 700; transition: color 0.2s ease, opacity 0.2s ease; }
-    .nav-link:hover { color: #C0392B; }
+    /* ===== SCROLL PROGRESS BAR STYLES ===== */
+    /* Fixed top indicator for reading progress */
+    #scrollProgress { transform-origin:left center; }
 
-    /* ===== CART ICON & BADGE ===== */
-    /* Utility styling for nav cart control and count badge */
-    .cart-icon-btn { position: relative; display: inline-flex; align-items: center; gap: 8px; color: #fff; font-size: 18px; background: transparent; border: none; cursor: pointer; }
-    #cart-count { position: absolute; top: -8px; right: -8px; width: 20px; height: 20px; border-radius: 9999px; background: #C0392B; color: #fff; display: none; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; line-height: 1; }
+    /* ===== HERO SECTION ANIMATIONS ===== */
+    /* Floating gradient orbs and stagger motion for headline lines */
+    @keyframes floatSlow { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-14px)} }
+    @keyframes glowPulse { 0%,100%{box-shadow:0 0 0 rgba(192,57,43,0.0)} 50%{box-shadow:0 0 80px rgba(192,57,43,0.35)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes staggerIn { from{opacity:0;transform:translateY(34px)} to{opacity:1;transform:translateY(0)} }
+    .animate-floatSlow { animation: floatSlow 6s ease-in-out infinite; }
+    .animate-glowPulse { animation: glowPulse 3.5s ease-in-out infinite; }
+    .stagger-1 { animation: staggerIn .9s ease .1s both; }
+    .stagger-2 { animation: staggerIn .9s ease .28s both; }
+    .stagger-3 { animation: staggerIn .9s ease .46s both; }
 
-    /* ===== HERO SECTION ===== */
-    /* Full viewport intro with staggered headline animation and floating product image */
-    .hero-section { min-height: 100vh; background: #0a0e1a; position: relative; overflow: hidden; }
-    @keyframes slide-up { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes floatAnim { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-    @keyframes blobFloat1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(16px,-18px) scale(1.05); } }
-    @keyframes blobFloat2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-18px,14px) scale(0.96); } }
-    @keyframes blobFloat3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(10px,20px) scale(1.08); } }
-    .hero-title-line { display: block; animation: slide-up 0.9s ease both; }
-    .hero-title-line:nth-child(1) { animation-delay: 0.2s; }
-    .hero-title-line:nth-child(2) { animation-delay: 0.4s; }
-    .hero-title-line:nth-child(3) { animation-delay: 0.6s; }
+    /* ===== SECTION REVEAL ANIMATION ===== */
+    /* IntersectionObserver targets for elegant entrance transitions */
+    .reveal { opacity:0; transform:translateY(24px); transition:all .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
 
-    /* ===== STAT STRIP ===== */
-    /* High-impact metrics band with dividers */
-    .stats-strip { background: linear-gradient(135deg, #7a0000, #C0392B); }
+    /* ===== CART SIDEBAR STYLES ===== */
+    /* Off-canvas cart with overlay */
+    #cartSidebar { transform: translateX(100%); transition: transform .35s ease; }
+    #cartSidebar.open { transform: translateX(0); }
 
-    /* ===== FEATURE / CONTENT CARDS ===== */
-    /* Shared card treatment for step blocks and testimonials */
-    .glass-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .glass-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(192,57,43,0.25); }
+    /* ===== VIDEO GLOW STYLES ===== */
+    /* Hero video framing and luminous border */
+    .video-shell { box-shadow:0 18px 70px rgba(192,57,43,.18); }
 
-    /* ===== FADE UP ANIMATIONS ===== */
-    /* Reveal effect for testimonials and any future content blocks */
-    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    /* ===== CUSTOM LAUNCHER STYLES ===== */
+    /* Floating assistant launcher, bottom-right, replacing default bubble */
+    #bg-launcher { position: fixed; bottom: 28px; right: 28px; z-index: 99998; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+    #bg-main-btn { display:flex; align-items:center; gap:10px; background:linear-gradient(135deg, #C0392B, #8B0000); color:white; border:none; border-radius:50px; padding:16px 24px; font-family:'Oswald', sans-serif; font-size:16px; font-weight:600; letter-spacing:.5px; cursor:pointer; box-shadow:0 8px 32px rgba(192,57,43,.5), 0 0 0 0 rgba(192,57,43,.4); animation:tapPulse 2.5s ease-in-out infinite; transition:transform .2s ease, box-shadow .2s ease; }
+    #bg-main-btn:hover { transform:translateY(-3px) scale(1.04); box-shadow:0 12px 40px rgba(192,57,43,.65); }
+    @keyframes tapPulse { 0%,100%{box-shadow:0 8px 32px rgba(192,57,43,.5),0 0 0 0 rgba(192,57,43,.35)} 50%{box-shadow:0 8px 32px rgba(192,57,43,.5),0 0 0 14px rgba(192,57,43,0)} }
+    #bg-icon { font-size:20px; animation:wiggle 3s ease-in-out infinite; }
+    @keyframes wiggle { 0%,100%{transform:rotate(0deg)} 20%{transform:rotate(-12deg)} 40%{transform:rotate(12deg)} 60%{transform:rotate(-6deg)} 80%{transform:rotate(6deg)} }
+    #bg-menu { display:flex; flex-direction:column; gap:10px; align-items:flex-end; opacity:0; transform:translateY(16px) scale(.92); pointer-events:none; transition:opacity .25s ease, transform .25s ease; }
+    #bg-menu.open { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
+    #bg-chat-btn, #bg-voice-btn { display:flex; align-items:center; gap:10px; border:none; border-radius:50px; padding:13px 22px; font-family:'Nunito', sans-serif; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; box-shadow:0 6px 20px rgba(0,0,0,.25); transition:transform .2s, box-shadow .2s; }
+    #bg-chat-btn { background:white; color:#0a0e1a; }
+    #bg-voice-btn { background:#0a0e1a; color:white; border:2px solid rgba(192,57,43,.4); }
+    #bg-chat-btn:hover, #bg-voice-btn:hover { transform:translateX(-4px); box-shadow:0 8px 28px rgba(0,0,0,.3); }
+    #bg-tooltip { position:absolute; bottom:70px; right:0; background:#0a0e1a; color:white; font-family:'Nunito', sans-serif; font-size:13px; font-weight:600; padding:8px 14px; border-radius:10px; white-space:nowrap; border:1px solid rgba(192,57,43,.4); animation:tooltipFade 4s ease forwards; pointer-events:none; }
+    #bg-tooltip::after { content:''; position:absolute; bottom:-6px; right:28px; width:12px; height:12px; background:#0a0e1a; border-right:1px solid rgba(192,57,43,.4); border-bottom:1px solid rgba(192,57,43,.4); transform:rotate(45deg); }
+    @keyframes tooltipFade { 0%{opacity:0;transform:translateY(6px)} 15%{opacity:1;transform:translateY(0)} 75%{opacity:1} 100%{opacity:0} }
 
-    /* ===== TOAST ===== */
-    /* Success notification for add-to-cart feedback */
-    .toast { position: fixed; right: 32px; bottom: 32px; background: #27ae60; color: #fff; padding: 16px 24px; border-radius: 12px; font-size: 15px; font-weight: 700; z-index: 99999; opacity: 0; transform: translateY(10px); pointer-events: none; }
-    .toast.show { animation: toastPulse 3s ease forwards; }
-    @keyframes toastPulse { 0% { opacity: 0; transform: translateY(10px); } 12% { opacity: 1; transform: translateY(0); } 85% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
-
-    /* ===== CART SIDEBAR ===== */
-    /* Fixed slide-in cart drawer from the right side */
-    #cartSidebar { position: fixed; top: 0; right: -400px; width: 380px; height: 100vh; background: #fff; z-index: 10000; transition: right 0.35s ease; box-shadow: -4px 0 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; }
-    #cartOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: none; }
-
-    /* ===== INTERACTIVE BUTTONS ===== */
-    /* Brand CTA treatment and subtle motion on hover */
-    .btn-brand { background: #C0392B; color: #fff; border-radius: 9999px; font-weight: 800; transition: transform 0.25s ease, filter 0.25s ease, background 0.25s ease; }
-    .btn-brand:hover { filter: brightness(1.15); transform: translateY(-2px); }
-    .btn-ghost { border: 2px solid rgba(255,255,255,0.8); color: #fff; border-radius: 9999px; font-weight: 800; transition: all 0.25s ease; }
-    .btn-ghost:hover { background: #fff; color: #0a0e1a; }
-
-    /* ===== RESPONSIVE TUNING ===== */
-    /* Small-screen safety padding and spacing to prevent edge clipping */
-    @media (max-width: 640px) {
-      .nav-mobile-stack { gap: 10px; }
-      #cartSidebar { width: 100%; right: -100%; }
-      .toast { left: 16px; right: 16px; bottom: 16px; }
+    /* ===== RESPONSIVE HERO TUNING ===== */
+    /* Ensures text never touches viewport edges on mobile */
+    @media (max-width: 767px) {
+      .mobile-safe { padding-left: 1rem !important; padding-right: 1rem !important; }
+      #bg-launcher { right: 16px; bottom: 16px; }
     }
