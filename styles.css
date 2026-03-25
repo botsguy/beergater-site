@@ -1,40 +1,44 @@
-/* ===== BASE STYLES ===== */
-    /* Mobile-first foundation with dark theme accents and smooth scrolling */
+/* ===== GLOBAL STYLES ===== */
+    /* Mobile-first structure with safe padding, smooth scrolling, and dark BeerGater palette */
     html { scroll-behavior: smooth; }
-    body { font-family: Inter, sans-serif; background: #0a0e1a; color: #e5e7eb; overflow-x: hidden; }
-    .font-oswald { font-family: Oswald, sans-serif; }
-    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
-    .fade-up.in-view { opacity: 1; transform: translateY(0); }
+    body { margin: 0; background: #0a0e1a; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; }
+    .section-pad { padding: 4rem 1rem; }
+    @media (min-width: 640px) { .section-pad { padding: 5rem 1.5rem; } }
+    @media (min-width: 1024px) { .section-pad { padding: 6rem 3rem; } }
 
     /* ===== SCROLL PROGRESS BAR ===== */
-    /* Fixed red bar at top with z-index below native widget */
-    #scrollProgress { position: fixed; top: 0; left: 0; height: 4px; width: 0%; background: linear-gradient(90deg, #ef4444, #dc2626); z-index: 9998; }
+    /* Fixed top indicator used for page reading progress */
+    #scrollProgress { position: fixed; top: 0; left: 0; height: 4px; width: 0; background: linear-gradient(90deg,#ff3b30,#c0392b); z-index: 9998; }
 
-    /* ===== HERO IMAGE FLOAT ===== */
-    /* Gentle vertical float animation for hero visual */
-    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .hero-float { animation: floaty 6s ease-in-out infinite; }
+    /* ===== NAVIGATION ===== */
+    /* Sticky dark navy navigation with shadow-on-scroll behavior */
+    .nav-shadow { box-shadow: 0 10px 30px rgba(0,0,0,.35); }
 
-    /* ===== STAT PULSE ===== */
-    /* Subtle highlight for stat cards and badges */
-    .stat-glow { box-shadow: 0 0 0 1px rgba(239,68,68,.18), 0 0 40px rgba(239,68,68,.15); }
+    /* ===== HERO ANIMATION ===== */
+    /* Floating glow motion for hero product visual */
+    @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    .floaty { animation: floaty 5s ease-in-out infinite; }
 
-    /* ===== CUSTOM VIDEO CONTROLS ===== */
-    /* Ensure video and overlay button remain polished and accessible */
-    .video-shell { box-shadow: 0 25px 80px rgba(0,0,0,.45); }
+    /* ===== FADE UP ===== */
+    /* Subtle reveal animation for sections and cards */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { opacity: 0; transform: translateY(24px); }
+    .fade-up.show { animation: fadeUp .7s ease forwards; }
+
+    /* ===== GLOW EFFECT ===== */
+    /* Red glow behind the main product image */
+    .red-glow { box-shadow: 0 0 60px rgba(192,57,43,.45); }
 
     /* ===== CART SIDEBAR ===== */
-    /* Off-canvas cart with overlay and smooth transitions */
-    .cart-panel { transform: translateX(100%); transition: transform .35s ease; }
-    .cart-panel.open { transform: translateX(0); }
+    /* Slide-in cart panel and dark overlay */
+    .cart-hidden { transform: translateX(100%); }
+    .overlay-hidden { opacity: 0; pointer-events: none; }
 
-    /* ===== NAV SHADOW ===== */
-    /* Adds depth when scrolling past the top of the page */
-    .nav-scrolled { box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    /* ===== VIDEO WRAPPER ===== */
+    /* Keeps hero video responsive with sound control overlay */
+    .video-wrap { position: relative; border-radius: 24px; overflow: hidden; }
 
-    /* ===== ANIMATED HERO TEXT ===== */
-    /* Staggered headline lines for dramatic impact */
-    .line-1 { animation: reveal .9s ease both .1s; }
-    .line-2 { animation: reveal .9s ease both .25s; }
-    .line-3 { animation: reveal .9s ease both .4s; }
-    @keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    /* ===== CTA BUTTONS ===== */
+    /* High-contrast buttons for primary and secondary actions */
+    .btn-red { background: #c0392b; color: #fff; }
+    .btn-ghost { border: 1px solid rgba(255,255,255,.25); color: #fff; background: rgba(255,255,255,.04); }
