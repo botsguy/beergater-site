@@ -1,0 +1,19 @@
+/* ===== GLOBAL BASE STYLES ===== */
+    /* Typography, motion, and brand-wide visual tuning */
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #0d1b2a; color: #fff; }
+    .font-display { font-family: 'Oswald', sans-serif; letter-spacing: .02em; }
+    .glass { backdrop-filter: blur(10px); background: rgba(13,27,42,.72); }
+    .shadow-glow { box-shadow: 0 0 0 1px rgba(192,57,43,.22), 0 18px 45px rgba(0,0,0,.35); }
+    .section-diagonal-top { clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%); }
+    .section-diagonal-bottom { clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+    .nav-scrolled { background: rgba(10,16,28,.96) !important; box-shadow: 0 10px 30px rgba(0,0,0,.32); }
+    .btn-primary { background: #C0392B; transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 0 0 1px rgba(192,57,43,.35), 0 18px 35px rgba(192,57,43,.28); filter: brightness(1.05); }
+    .btn-ghost { border: 1px solid rgba(255,255,255,.25); transition: transform .2s ease, background .2s ease, box-shadow .2s ease; }
+    .btn-ghost:hover { transform: translateY(-2px); background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.14); }
+    .marquee-track { animation: marquee 22s linear infinite; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .play-overlay.hide { opacity: 0; pointer-events: none; transform: scale(.92); }
