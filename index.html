@@ -5,27 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   
-  <script src="https://paymegpt.com/widget.js" data-widget="82333694" async></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://paymegpt.com/widget.js" data-widget="82333694" async></script>
+  <script>
+    window.PayMeGPTVoiceConfig = { widgetId: '82333694', type: 'voice_launcher', primaryColor: '#C0392B', position: 'bottom-left', label: '🎙️ Talk to Tap!', icon: 'mic', startButtonText: 'START TALKING', stopButtonText: 'End Call', theme: 'dark'
+    };
+  </script>
   
 
 <!-- SEO Meta Tags -->
-<title>BeerGater v11 | The Original Tailgate Experience</title>
-<meta name="description" content="BeerGater v11 is a high-converting landing page for the original tailgate experience, featuring dual taps, product features, testimonials, shop, contact, and AI chat guidance." />
-<meta property="og:title" content="BeerGater v11 | The Original Tailgate Experience" />
-<meta property="og:description" content="BeerGater v11 is a high-converting landing page for the original tailgate experience, featuring dual taps, product features, testimonials, shop, contact, and AI chat guidance." />
+<title>BeerGater v12 | The Original Tailgate Tap System</title>
+<meta name="description" content="BeerGater brings cold beer on tap anywhere with the original tailgate tap system, smart chill tech, and the legendary Tap AI hype man." />
+<meta property="og:title" content="BeerGater v12 | The Original Tailgate Tap System" />
+<meta property="og:description" content="BeerGater brings cold beer on tap anywhere with the original tailgate tap system, smart chill tech, and the legendary Tap AI hype man." />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="BeerGater v11 | The Original Tailgate Experience" />
-<meta name="twitter:description" content="BeerGater v11 is a high-converting landing page for the original tailgate experience, featuring dual taps, product features, testimonials, shop, contact, and AI chat guidance." />
+<meta name="twitter:title" content="BeerGater v12 | The Original Tailgate Tap System" />
+<meta name="twitter:description" content="BeerGater brings cold beer on tap anywhere with the original tailgate tap system, smart chill tech, and the legendary Tap AI hype man." />
 <!-- End SEO Meta Tags -->
 
 <script data-gate>
 (function(){
-  var slug='UcDsWN';var apiBase='https://paymegpt.com';var currency='USD';var presets=[2500,5000,10000,25000];var minAmt=100;var maxAmt=1000000;var thankYouMsg='Thank you for your generous donation!';
+  var slug='nVfXeGwqh';var apiBase='https://paymegpt.com';var currency='USD';var presets=[2500,5000,10000,25000];var minAmt=100;var maxAmt=1000000;var thankYouMsg='Thank you for your generous donation!';
   function fmtD(c){return new Intl.NumberFormat('en-US',{style:'currency',currency:currency}).format(c/100);}
   window.__processDonation=function(amountCents,email,donorName,donorMessage){
     if(!amountCents||amountCents<minAmt){alert('Minimum donation is '+fmtD(minAmt));return Promise.reject('below_min');}
@@ -151,7 +152,7 @@
   function run(){
     if(contactId){
       var xhr=new XMLHttpRequest();
-      xhr.open('GET','https://paymegpt.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=2563');
+      xhr.open('GET','https://paymegpt.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=2564');
       xhr.onload=function(){
         if(xhr.status===200){
           try{
@@ -178,7 +179,7 @@
 </script>
 <script data-payment>
 (function(){
-  var slug='UcDsWN';
+  var slug='nVfXeGwqh';
   var apiBase='https://paymegpt.com';
   function findEmail(){
     var ids=['email','emailAddress','buyer-email','buyerEmail','user-email','userEmail','checkout-email','customer-email','contact-email'];
@@ -231,326 +232,254 @@
 })();
 </script>  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="antialiased">
-  <div class="scroll-progress" id="scrollProgress"></div>
+<body class="selection:bg-red-600 selection:text-white">
+  <div id="scrollProgress"></div>
 
   <!-- ============================================================================ -->
-  <!-- NAVIGATION: Sticky header with logo, links, cart badge, and shop CTA         -->
-  <!-- Features: Sticky top bar, mobile-safe padding, red/white branding           -->
-  <!-- Mobile Padding: px-4 py-4 on small screens prevents edge clipping           -->
+  <!-- NAVIGATION SECTION: Sticky header with logo, primary links, cart badge       -->
+  <!-- Features: Mobile-friendly nav, CTA button, anchored page links               -->
+  <!-- Mobile Padding: Wrapped with safe spacing so text never touches edges        -->
   <!-- ============================================================================ -->
-  <header class="sticky top-0 z-50 bg-[#0a0e1a]/95 backdrop-blur border-b border-white/10">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
-      <a href="#home" class="flex items-center gap-3 min-w-0">
-        <span class="text-[#c0392b] font-bold uppercase tracking-[0.22em] text-xs sm:text-sm whitespace-nowrap">THE ORIGINAL</span>
-        <span class="oswald text-white text-2xl sm:text-3xl leading-none whitespace-nowrap">BeerGater</span>
+  <header class="sticky top-0 z-50 bg-[#0a0e1a] border-b border-white/10" id="siteHeader" data-section="navigation">
+    <div class="mx-auto max-w-7xl px-4 py-4 md:px-6 lg:px-8 flex items-center justify-between gap-4">
+      <a href="#home" class="flex items-end gap-3 group" aria-label="BeerGater home">
+        <span class="text-red-500 font-bold tracking-[0.25em] text-xs sm:text-sm uppercase">THE ORIGINAL</span>
+        <span class="font-['Oswald',sans-serif] text-3xl sm:text-4xl leading-none text-white group-hover:text-red-400 transition">BeerGater</span>
       </a>
-      <div class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-200">
-        <a href="#home" class="hover:text-white">HOME</a>
-        <a href="#how-it-works" class="hover:text-white">HOW IT WORKS</a>
-        <a href="#shop" class="hover:text-white">SHOP</a>
-        <a href="#about" class="hover:text-white">ABOUT</a>
-        <a href="#contact" class="hover:text-white">CONTACT</a>
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-white/80">
+        <a href="#home" class="hover:text-red-400 transition">HOME</a>
+        <a href="#how-it-works" class="hover:text-red-400 transition">HOW IT WORKS</a>
+        <a href="#shop" class="hover:text-red-400 transition">SHOP</a>
+        <a href="#about" class="hover:text-red-400 transition">ABOUT</a>
+        <a href="#contact" class="hover:text-red-400 transition">CONTACT</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button id="shopNowTop" class="hidden sm:inline-flex items-center rounded-full bg-red-600 px-5 py-3 text-sm font-bold uppercase tracking-wide text-white hover:bg-red-500 transition" onclick="document.querySelector('#shop').scrollIntoView({behavior:'smooth'})">SHOP NOW</button>
+        <button class="relative inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-3 text-sm text-white hover:border-red-400 transition" aria-label="Cart">
+          <span>🛒</span><span class="hidden sm:inline">Cart</span><span id="cart-count" class="ml-1 inline-flex min-w-6 h-6 items-center justify-center rounded-full bg-red-600 px-2 text-xs font-bold">0</span>
+        </button>
       </div>
-      <div class="flex items-center gap-2 sm:gap-3">
-        <a href="#shop" class="hidden sm:inline-flex items-center rounded-full bg-[#c0392b] px-4 py-2 text-white font-semibold hover:bg-[#a93226]">SHOP NOW</a>
-        <div class="relative">
-          <button id="cartBtn" class="rounded-full border border-white/15 bg-white/5 px-3 py-2 text-white hover:bg-white/10">
-            🛒 <span id="cart-count" class="inline-flex items-center justify-center min-w-6 h-6 px-1 ml-1 rounded-full bg-[#c0392b] text-xs font-bold">0</span>
-          </button>
-        </div>
-      </div>
-    </nav>
+    </div>
   </header>
 
   <!-- ============================================================================ -->
-  <!-- HERO SECTION: Main landing area with headline, subtext, trust badges        -->
-  <!-- Features: Two-column grid, primary CTAs, strong visual product presence      -->
-  <!-- Mobile Padding: px-4 py-6 on mobile prevents text touching viewport edges   -->
+  <!-- HERO SECTION: Main landing area with headline, subtext, and primary CTAs    -->
+  <!-- Features: 2-column layout, trust badges, product image with glow            -->
+  <!-- Mobile Padding: px-4 py-6 on mobile to protect headline spacing             -->
   <!-- ============================================================================ -->
-  <main id="home">
-    <section class="min-h-screen bg-[#0a0e1a] flex items-center">
-      <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div class="fade-up">
-            <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold mb-4">THE ORIGINAL TAILGATE EXPERIENCE</p>
-            <h1 class="oswald text-white text-5xl sm:text-6xl lg:text-7xl leading-[0.92] font-semibold max-w-xl">
-              Take Your
-              <span class="block mt-2">Tailgate to a</span>
-              <span class="block mt-2">Whole New Level.</span>
-            </h1>
-            <p class="mt-6 text-slate-300 text-lg leading-8 max-w-xl">
-              BeerGater turns any gathering into the main event with portable dual-tap convenience, cold pours, and a setup built for legends.
-            </p>
-            <div class="mt-8 flex flex-col sm:flex-row gap-4">
-              <a href="#shop" class="inline-flex justify-center items-center rounded-full bg-[#c0392b] px-6 py-3 font-semibold text-white hover:bg-[#a93226] lift">SHOP NOW</a>
-              <a href="#how-it-works" class="inline-flex justify-center items-center rounded-full border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white hover:bg-white/10">HOW IT WORKS</a>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-3 text-sm text-slate-200">
-              <span class="rounded-full bg-white/6 border border-white/10 px-4 py-2">✅ Easy setup</span>
-              <span class="rounded-full bg-white/6 border border-white/10 px-4 py-2">✅ Cold on tap</span>
-              <span class="rounded-full bg-white/6 border border-white/10 px-4 py-2">✅ Built for game day</span>
-            </div>
+  <main id="home" data-section="hero">
+    <section class="bg-[#0a0e1a] min-h-[100vh] flex items-center">
+      <div class="mx-auto max-w-7xl w-full px-4 py-8 md:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="fade-up">
+          <p class="text-red-500 font-bold tracking-[0.35em] uppercase text-xs sm:text-sm mb-4">YOUR TAILGATE. LEVELLED UP.</p>
+          <h1 class="font-['Oswald',sans-serif] text-5xl sm:text-6xl lg:text-7xl leading-[0.94] font-bold text-white max-w-2xl">
+            <span class="block">Take Your</span>
+            <span class="block pl-6 sm:pl-10">Tailgate to a</span>
+            <span class="block pl-12 sm:pl-20">Whole New Level.</span>
+          </h1>
+          <p class="mt-6 max-w-xl text-white/75 text-lg leading-8">BeerGater is the original portable beer tap system built for game day legends, backyard heroes, and anyone who wants cold beer on tap anywhere.</p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <a href="#shop" class="inline-flex justify-center rounded-full bg-red-600 px-7 py-4 font-bold uppercase tracking-wide text-white hover:bg-red-500 transition">Shop BeerGater</a>
+            <a href="#how-it-works" class="inline-flex justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 font-bold uppercase tracking-wide text-white hover:border-red-400 hover:text-red-300 transition">See How It Works</a>
           </div>
-          <div class="relative fade-up">
-            <div class="absolute inset-0 rounded-full bg-[#c0392b]/20 blur-3xl"></div>
-            <img src="https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047" alt="BeerGater portable kegerator" class="relative hero-glow w-full max-w-xl mx-auto rounded-3xl" />
+          <div class="mt-8 flex flex-wrap gap-3 text-sm text-white/70">
+            <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2">✅ 2 Dual Taps</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2">✅ 22 Cans Per Fill</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2">✅ 16 Pints of Beer</span>
+          </div>
+        </div>
+        <div class="relative fade-up">
+          <div class="absolute inset-0 rounded-[2rem] bg-red-600/20 blur-3xl"></div>
+          <img src="https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047" alt="BeerGater tailgate tap system" class="relative z-10 w-full max-w-xl mx-auto floaty drop-shadow-[0_20px_60px_rgba(192,57,43,0.45)]" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- STATS BAR SECTION: Quick social proof and product capability metrics        -->
+    <!-- Features: Red gradient background, count-up numbers, compact layout        -->
+    <!-- Mobile Padding: Safe inner spacing for small screens                       -->
+    <!-- ============================================================================ -->
+    <section class="bg-gradient-to-r from-[#8B0000] via-[#C0392B] to-[#e14a3b]" data-section="stats">
+      <div class="mx-auto max-w-7xl px-4 py-8 md:px-6 lg:px-8 grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+        <div class="fade-up"><div class="text-3xl sm:text-4xl font-['Oswald',sans-serif] font-bold">2</div><div class="uppercase tracking-[0.25em] text-xs sm:text-sm font-semibold">Dual Taps</div></div>
+        <div class="fade-up"><div class="text-3xl sm:text-4xl font-['Oswald',sans-serif] font-bold">22</div><div class="uppercase tracking-[0.25em] text-xs sm:text-sm font-semibold">Cans Per Fill</div></div>
+        <div class="fade-up"><div class="text-3xl sm:text-4xl font-['Oswald',sans-serif] font-bold">16</div><div class="uppercase tracking-[0.25em] text-xs sm:text-sm font-semibold">Pints of Beer</div></div>
+        <div class="fade-up"><div class="text-3xl sm:text-4xl font-['Oswald',sans-serif] font-bold">500+</div><div class="uppercase tracking-[0.25em] text-xs sm:text-sm font-semibold">Happy Customers</div></div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- FEATURES SECTION: Product highlights and value proposition                  -->
+    <!-- Features: Image glow, layered copy, feature bullets, CTA                   -->
+    <!-- Mobile Padding: Content maintains p-4 minimum on all viewports             -->
+    <!-- ============================================================================ -->
+    <section class="bg-[#0d1420] text-white" data-section="features">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="fade-up">
+          <img src="https://beergater.com/cdn/shop/files/Fill-Chill.webp?v=1772658945" alt="BeerGater feature image" class="rounded-3xl border border-white/10 shadow-2xl shadow-red-900/20" />
+        </div>
+        <div class="fade-up">
+          <p class="text-red-400 font-bold tracking-[0.3em] uppercase text-xs mb-3">WHY BEERGATER</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold leading-tight">Cold Beer On Tap. Anywhere.</h2>
+          <p class="mt-5 text-white/75 leading-8">Built to keep the party moving, BeerGater combines rugged portability with a clean pour system that makes every tailgate feel like the main event.</p>
+          <div class="mt-8 space-y-4">
+            <div class="flex gap-4 items-start"><div class="text-red-400 text-2xl">⚡</div><div><h3 class="font-bold text-lg">Fast Setup</h3><p class="text-white/70">Get from trunk to first pour in minutes with a simple, durable system.</p></div></div>
+            <div class="flex gap-4 items-start"><div class="text-red-400 text-2xl">🧊</div><div><h3 class="font-bold text-lg">Cold Retention</h3><p class="text-white/70">Engineered to help your beer stay colder while the crowd gets louder.</p></div></div>
+            <div class="flex gap-4 items-start"><div class="text-red-400 text-2xl">🍺</div><div><h3 class="font-bold text-lg">Game Day Ready</h3><p class="text-white/70">Designed for fans who want style, function, and unforgettable pours.</p></div></div>
+          </div>
+          <a href="#shop" class="mt-8 inline-flex rounded-full bg-red-600 px-7 py-4 font-bold uppercase tracking-wide text-white hover:bg-red-500 transition">Get BeerGater</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- HOW IT WORKS SECTION: Four-step product explanation                        -->
+    <!-- Features: Glass cards, iconography, simple instructional flow              -->
+    <!-- Mobile Padding: Spacious content wrapping prevents edge clipping           -->
+    <!-- ============================================================================ -->
+    <section id="how-it-works" class="bg-[#0d1420] text-white" data-section="how-it-works">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+        <div class="max-w-2xl fade-up">
+          <p class="text-red-400 font-bold tracking-[0.3em] uppercase text-xs mb-3">HOW IT WORKS</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold">Four simple steps to legendary pours.</h2>
+        </div>
+        <div class="mt-10 grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+          <div class="fade-up rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <img src="https://beergater.com/cdn/shop/files/Fill-Chill.webp?v=1772658945" alt="Fill step" class="rounded-2xl mb-5" />
+            <h3 class="font-['Oswald',sans-serif] text-2xl font-bold">FILL</h3>
+            <p class="mt-2 text-white/70">Load your favorite beer and prep for the party.</p>
+          </div>
+          <div class="fade-up rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <img src="https://beergater.com/cdn/shop/files/Fill-Chill.webp?v=1772658945" alt="Chill step" class="rounded-2xl mb-5" />
+            <h3 class="font-['Oswald',sans-serif] text-2xl font-bold">CHILL</h3>
+            <p class="mt-2 text-white/70">Keep everything cold and ready for the next round.</p>
+          </div>
+          <div class="fade-up rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <img src="https://beergater.com/cdn/shop/files/Click-Pour.png?v=1772834256" alt="Pressurize step" class="rounded-2xl mb-5" />
+            <h3 class="font-['Oswald',sans-serif] text-2xl font-bold">PRESSURIZE</h3>
+            <p class="mt-2 text-white/70">Dial in the system for smooth, consistent flow.</p>
+          </div>
+          <div class="fade-up rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <img src="https://beergater.com/cdn/shop/files/Click-Pour.png?v=1772834256" alt="Pour step" class="rounded-2xl mb-5" />
+            <h3 class="font-['Oswald',sans-serif] text-2xl font-bold">POUR</h3>
+            <p class="mt-2 text-white/70">Serve a perfect tap pour that keeps the crowd coming back.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================================ -->
-    <!-- STATS BAR: High-impact metric strip with count-up animations                -->
-    <!-- Features: Four key numbers with red gradient background                     -->
+    <!-- VIDEO SECTION: Brand story video with sound overlay                         -->
+    <!-- Features: Autoplay background video, user-initiated sound activation       -->
+    <!-- Mobile Padding: Overlay and controls centered safely within viewport       -->
     <!-- ============================================================================ -->
-    <section class="bg-gradient-to-r from-[#c0392b] to-[#8e2a20]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-          <div class="py-4">
-            <div class="counter text-4xl font-bold text-white" data-target="2">0</div>
-            <div class="mt-2 text-sm tracking-[0.2em] uppercase text-white/85">Dual Taps</div>
-          </div>
-          <div class="py-4">
-            <div class="counter text-4xl font-bold text-white" data-target="22">0</div>
-            <div class="mt-2 text-sm tracking-[0.2em] uppercase text-white/85">Cans Per Fill</div>
-          </div>
-          <div class="py-4">
-            <div class="counter text-4xl font-bold text-white" data-target="16">0</div>
-            <div class="mt-2 text-sm tracking-[0.2em] uppercase text-white/85">Pints of Beer</div>
-          </div>
-          <div class="py-4">
-            <div class="counter text-4xl font-bold text-white" data-target="500">0</div>
-            <div class="mt-2 text-sm tracking-[0.2em] uppercase text-white/85">Happy Customers</div>
-          </div>
+    <section class="relative bg-[#060b14]" data-section="video">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+        <div class="relative overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl">
+          <video id="bgVideo" autoplay muted loop playsinline poster="https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047" class="w-full h-[420px] md:h-[560px] object-cover">
+            <source src="https://beergater.com/cdn/shop/videos/ce/v1/p5/cms/files/2e4e0ef217474dcb8e17ff33b2dc461b.mp4" type="video/mp4" />
+          </video>
+          <button id="soundOverlay" class="video-overlay absolute inset-0 flex items-center justify-center bg-black/35">
+            <span class="rounded-full bg-red-600 px-6 py-4 font-bold uppercase tracking-wide text-white shadow-lg">🔊 Click Here For Sound</span>
+          </button>
         </div>
       </div>
     </section>
 
     <!-- ============================================================================ -->
-    <!-- PRODUCT FEATURES SECTION: Why BeerGater matters                             -->
-    <!-- Features: Dark navy split layout, product image, benefit bullets, CTA      -->
+    <!-- OUR STORY SECTION: Founder-style brand story and credibility                -->
+    <!-- Features: Two-column layout, supporting image, CTA                          -->
+    <!-- Mobile Padding: Consistent px-4 safe space                                  -->
     <!-- ============================================================================ -->
-    <section class="bg-[#0d1420]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div class="fade-up">
-            <img src="https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047" alt="BeerGater product close-up" class="w-full rounded-3xl hero-glow" />
-          </div>
-          <div class="fade-up">
-            <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">WHY BEERGATER</p>
-            <h2 class="oswald text-white text-4xl sm:text-5xl mt-3 leading-tight">Cold Beer On Tap. Anywhere.</h2>
-            <p class="mt-5 text-slate-300 text-lg leading-8">
-              BeerGater was designed for backyard champions, tailgate crews, and anyone who wants the best seat at the party.
-            </p>
-            <div class="mt-8 space-y-4">
-              <div class="flex gap-4 items-start">
-                <div class="text-[#c0392b] text-2xl">⚡</div>
-                <div>
-                  <h3 class="font-semibold text-white">Portable and ready to roll</h3>
-                  <p class="text-slate-300">Set up fast and bring the tap to the action.</p>
-                </div>
+    <section id="about" class="bg-white text-slate-900" data-section="our-story">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="fade-up">
+          <img src="https://beergater.com/cdn/shop/files/Our_Story.webp?v=1772312437" alt="BeerGater story" class="rounded-3xl shadow-2xl" />
+        </div>
+        <div class="fade-up">
+          <p class="text-red-600 font-bold tracking-[0.3em] uppercase text-xs mb-3">OUR STORY</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold leading-tight">Built by fans who wanted the party to last longer.</h2>
+          <p class="mt-5 text-slate-700 leading-8">BeerGater started with one goal: make tailgating feel bigger, colder, and more unforgettable. The result is a tap system that turns any parking lot, patio, or pregame into the main attraction.</p>
+          <a href="#shop" class="mt-8 inline-flex rounded-full bg-red-600 px-7 py-4 font-bold uppercase tracking-wide text-white hover:bg-red-500 transition">Join the Movement</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- BADGES SECTION: Feature badges and community proof                          -->
+    <!-- Features: Nine pills, hover emphasis, quick scan readability                -->
+    <!-- Mobile Padding: Safe internal spacing and wrapping                          -->
+    <!-- ============================================================================ -->
+    <section class="bg-[#0a0e1a] text-white" data-section="not-just-beer">
+      <div class="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:px-8">
+        <div class="fade-up max-w-2xl">
+          <p class="text-red-400 font-bold tracking-[0.3em] uppercase text-xs mb-3">NOT JUST BEER</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold">Built for the whole crew.</h2>
+        </div>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Game Day</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Backyard BBQ</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Home Parties</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Tailgates</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Graduation</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Weddings</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Camping</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Watch Parties</span>
+          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 hover:bg-red-600 transition">Weekend Wins</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- WHATS INCLUDED SECTION: Package contents and component breakdown            -->
+    <!-- Features: Four cards, emoji icons, concise inclusion details                -->
+    <!-- Mobile Padding: Sections maintain minimum safe spacing                     -->
+    <!-- ============================================================================ -->
+    <section class="bg-[#0d1420] text-white" data-section="whats-included">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+        <div class="fade-up max-w-2xl">
+          <p class="text-red-400 font-bold tracking-[0.3em] uppercase text-xs mb-3">WHAT'S INCLUDED</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold">Everything you need to start pouring.</h2>
+        </div>
+        <div class="mt-10 grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          <div class="fade-up rounded-3xl bg-white/5 border border-white/10 p-6"><div class="text-4xl">🎯</div><h3 class="mt-4 font-bold text-xl">Two Tap Heads</h3><p class="mt-2 text-white/70">Serve two drinks at once and keep the line moving.</p></div>
+          <div class="fade-up rounded-3xl bg-white/5 border border-white/10 p-6"><div class="text-4xl">🧰</div><h3 class="mt-4 font-bold text-xl">Setup Kit</h3><p class="mt-2 text-white/70">Hardware and essentials for a straightforward install.</p></div>
+          <div class="fade-up rounded-3xl bg-white/5 border border-white/10 p-6"><div class="text-4xl">🧊</div><h3 class="mt-4 font-bold text-xl">Cold Control</h3><p class="mt-2 text-white/70">Keep your beer cold and your pour smooth under pressure.</p></div>
+          <div class="fade-up rounded-3xl bg-white/5 border border-white/10 p-6"><div class="text-4xl">🏈</div><h3 class="mt-4 font-bold text-xl">Tailgate Energy</h3><p class="mt-2 text-white/70">Designed to make every gathering feel like a kickoff party.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- SHOP SECTION: Featured product, price, cart actions                         -->
+    <!-- Features: Single product card, checkout-ready buy buttons                  -->
+    <!-- Mobile Padding: Prevents clipping on smaller devices                        -->
+    <!-- ============================================================================ -->
+    <section id="shop" class="bg-[#0a0e1a] text-white" data-section="shop">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+        <div class="fade-up max-w-2xl">
+          <p class="text-red-400 font-bold tracking-[0.3em] uppercase text-xs mb-3">SHOP</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold">BeerGater Original System</h2>
+        </div>
+        <div class="mt-10 max-w-[700px] mx-auto rounded-[2rem] border border-white/10 bg-white/5 p-5 sm:p-7 shadow-2xl">
+          <div class="grid md:grid-cols-2 gap-6 items-center">
+            <img src="https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047" alt="BeerGater product" class="rounded-3xl" />
+            <div>
+              <div class="inline-flex rounded-full bg-red-600 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em]">MOST POPULAR</div>
+              <div class="mt-4 flex items-center gap-2 text-yellow-400">★★★★★ <span class="text-white/70 text-sm">(5.0)</span></div>
+              <div class="mt-3 text-4xl font-['Oswald',sans-serif] font-bold">$299.99</div>
+              <p class="mt-2 text-white/70">Free shipping. Built for fans. Made to pour.</p>
+              <ul class="mt-5 space-y-2 text-white/85">
+                <li>• Cold beer on tap anywhere</li>
+                <li>• Durable, tailgate-ready construction</li>
+                <li>• Easy setup for instant party value</li>
+                <li>• Designed to impress the whole crew</li>
+              </ul>
+              <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                <button id="addToCartBtn" class="rounded-full bg-red-600 px-6 py-4 font-bold uppercase tracking-wide text-white hover:bg-red-500 transition">Add to Cart</button>
+                <button id="buyNowBtn" class="rounded-full border border-white/15 bg-white/5 px-6 py-4 font-bold uppercase tracking-wide text-white hover:border-red-400 transition">Buy Now</button>
               </div>
-              <div class="flex gap-4 items-start">
-                <div class="text-[#c0392b] text-2xl">🍺</div>
-                <div>
-                  <h3 class="font-semibold text-white">Dual-faucet power</h3>
-                  <p class="text-slate-300">Serve two favorites at once with a clean, crowd-pleasing pour.</p>
-                </div>
-              </div>
-              <div class="flex gap-4 items-start">
-                <div class="text-[#c0392b] text-2xl">🧊</div>
-                <div>
-                  <h3 class="font-semibold text-white">Keeps it cold</h3>
-                  <p class="text-slate-300">Engineered to help maintain the chill through the whole event.</p>
-                </div>
-              </div>
-            </div>
-            <a href="#shop" class="inline-flex mt-8 rounded-full bg-[#c0392b] px-6 py-3 font-semibold text-white hover:bg-[#a93226] lift">GET YOURS TODAY</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================================ -->
-    <!-- HOW IT WORKS SECTION: Step-by-step visuals with glassmorphism cards         -->
-    <!-- Features: Four-step process grid, centered labels, image-backed cards       -->
-    <!-- ============================================================================ -->
-    <section id="how-it-works" class="bg-[#0d1420]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="text-center max-w-3xl mx-auto fade-up">
-          <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">HOW IT WORKS</p>
-          <h2 class="oswald text-white text-4xl sm:text-5xl mt-3">From Fill to Pour in Four Simple Steps</h2>
-          <p class="mt-4 text-slate-300 text-lg">A smooth setup that keeps the party moving and the beer flowing.</p>
-        </div>
-        <div class="mt-12 grid md:grid-cols-2 xl:grid-cols-4 gap-5">
-          <div class="glass-card rounded-2xl p-5 text-center lift fade-up">
-            <img src="https://beergater.com/cdn/shop/files/Fill-Chill.webp?v=1772658945" alt="Fill step" class="w-full h-56 object-cover rounded-xl mb-4" />
-            <h3 class="oswald text-white text-2xl">FILL</h3>
-            <p class="text-slate-300 mt-2">Load your tanks and get ready for a big game day pour.</p>
-          </div>
-          <div class="glass-card rounded-2xl p-5 text-center lift fade-up">
-            <img src="https://beergater.com/cdn/shop/files/Fill-Chill.webp?v=1772658945" alt="Chill step" class="w-full h-56 object-cover rounded-xl mb-4" />
-            <h3 class="oswald text-white text-2xl">CHILL</h3>
-            <p class="text-slate-300 mt-2">Keep your beverages cold so every pour stays crisp.</p>
-          </div>
-          <div class="glass-card rounded-2xl p-5 text-center lift fade-up">
-            <img src="https://beergater.com/cdn/shop/files/Click-Pour.png?v=1772834256" alt="Pressurize step" class="w-full h-56 object-cover rounded-xl mb-4" />
-            <h3 class="oswald text-white text-2xl">PRESSURIZE</h3>
-            <p class="text-slate-300 mt-2">Dial in the pressure for a steady, satisfying flow.</p>
-          </div>
-          <div class="glass-card rounded-2xl p-5 text-center lift fade-up">
-            <img src="https://beergater.com/cdn/shop/files/Click-Pour.png?v=1772834256" alt="Pour step" class="w-full h-56 object-cover rounded-xl mb-4" />
-            <h3 class="oswald text-white text-2xl">POUR</h3>
-            <p class="text-slate-300 mt-2">Serve the crowd and keep the good times rolling.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================================ -->
-    <!-- VIDEO SECTION: Cinematic product demo with sound overlay                    -->
-    <!-- Features: Centered headline, bordered video, tap-to-unmute overlay         -->
-    <!-- ============================================================================ -->
-    <section class="bg-[#060b14]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="text-center max-w-3xl mx-auto fade-up">
-          <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">SEE IT IN ACTION</p>
-          <h2 class="oswald text-white text-4xl sm:text-5xl mt-3">Watch the Magic Happen</h2>
-          <p class="mt-4 text-slate-300 text-lg">See how BeerGater turns every gathering into a pour-worthy moment.</p>
-        </div>
-        <div class="mt-12 max-w-[880px] mx-auto">
-          <div class="video-wrap">
-            <video id="bgVideo" autoplay muted loop playsinline style="width:100%;display:block;" poster="https://beergater.com/cdn/shop/files/preview_images/b64d37f4509b4500b85bbc3a354c554d.thumbnail.0000000000_small.jpg?v=1772654099">
-              <source src="https://beergater.com/cdn/shop/videos/c/vp/01b2c35785ab46859c937d80267a6767/01b2c35785ab46859c937d80267a6767.HD-1080p-2.5Mbps-66127738.mp4?v=0" type="video/mp4">
-            </video>
-            <button id="soundOverlay" class="absolute inset-0 flex items-center justify-center bg-black/35 cursor-pointer">
-              <span class="pointer-events-none rounded-full bg-[#c0392b] px-6 py-3 font-semibold text-white shadow-xl">🔊 Click Here For Sound</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================================ -->
-    <!-- OUR STORY SECTION: Brand origin and mission narrative                        -->
-    <!-- Features: Split layout, lifestyle image, story copy, CTA                    -->
-    <!-- ============================================================================ -->
-    <section id="about" class="bg-white text-slate-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div class="fade-up">
-            <img src="https://beergater.com/cdn/shop/files/Our_Story.webp?v=1772312437" alt="BeerGater story image" class="w-full rounded-3xl shadow-2xl" />
-          </div>
-          <div class="fade-up">
-            <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">OUR STORY</p>
-            <h2 class="oswald text-[#0a0e1a] text-4xl sm:text-5xl mt-3 leading-tight">Born From Frustration. Built for Legends.</h2>
-            <p class="mt-5 text-slate-700 text-lg leading-8">
-              BeerGater started with one simple idea: tailgate beer should be easier, colder, and way more fun. We built a system that feels right at home at the stadium, the cookout, or the backyard showdown.
-            </p>
-            <p class="mt-4 text-slate-700 leading-8">
-              From the first pour to the final cheers, our mission is to make hosting feel effortless and unforgettable.
-            </p>
-            <a href="#shop" class="inline-flex mt-8 rounded-full bg-[#c0392b] px-6 py-3 font-semibold text-white hover:bg-[#a93226] lift">SHOP NOW</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================================ -->
-    <!-- NOT JUST BEER SECTION: Beverage versatility showcase                        -->
-    <!-- Features: Badge chips with hover states, broad use-case messaging          -->
-    <!-- ============================================================================ -->
-    <section class="bg-[#0d1420]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="text-center max-w-3xl mx-auto fade-up">
-          <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">NOT JUST BEER</p>
-          <h2 class="oswald text-white text-4xl sm:text-5xl mt-3">Pour More Than Just Beer</h2>
-          <p class="mt-4 text-slate-300 text-lg">BeerGater is ready for your full party lineup.</p>
-        </div>
-        <div class="mt-10 flex flex-wrap justify-center gap-3">
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">🍺 Beer</span>
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">🍷 Wine</span>
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">🍹 Cocktails</span>
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">🥤 Soda</span>
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">💧 Water</span>
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">🧃 Juice</span>
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">🥊 Punch</span>
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">⚡ Energy Drinks</span>
-          <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-slate-100 hover:bg-[#c0392b] transition">🏈 Gatorade</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================================ -->
-    <!-- WHAT'S INCLUDED SECTION: Product contents and hardware highlights           -->
-    <!-- Features: Four-card layout with icons and concise product breakdown         -->
-    <!-- ============================================================================ -->
-    <section class="bg-[#0d1420]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="text-center max-w-3xl mx-auto fade-up">
-          <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">WHAT'S INCLUDED</p>
-          <h2 class="oswald text-white text-4xl sm:text-5xl mt-3">Everything You Need to Start Pouring</h2>
-        </div>
-        <div class="mt-12 grid md:grid-cols-2 xl:grid-cols-4 gap-5">
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-6 lift fade-up">
-            <div class="text-3xl">🥛</div>
-            <h3 class="mt-4 text-white font-semibold text-xl">Two 1-Gallon Pressure Tanks</h3>
-          </div>
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-6 lift fade-up">
-            <div class="text-3xl">⚙️</div>
-            <h3 class="mt-4 text-white font-semibold text-xl">Two CO2 Regulators</h3>
-          </div>
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-6 lift fade-up">
-            <div class="text-3xl">🔧</div>
-            <h3 class="mt-4 text-white font-semibold text-xl">All Hardware and Hoses</h3>
-          </div>
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-6 lift fade-up">
-            <div class="text-3xl">🍺</div>
-            <h3 class="mt-4 text-white font-semibold text-xl">Twin-Faucet Tap Plate</h3>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================================ -->
-    <!-- SHOP SECTION: Featured product, pricing, purchase CTA, and trust indicators -->
-    <!-- Features: Light background, product card, add to cart, external buy link    -->
-    <!-- ============================================================================ -->
-    <section id="shop" class="bg-[#f5f5f5] text-slate-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="max-w-3xl mx-auto text-center fade-up">
-          <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">SHOP</p>
-          <h2 class="oswald text-[#0a0e1a] text-4xl sm:text-5xl mt-3">BeerGater Portable Kegerator Tap</h2>
-        </div>
-        <div class="mt-12 max-w-[700px] mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
-          <div class="relative">
-            <span class="absolute top-4 left-4 rounded-full bg-[#c0392b] px-4 py-2 text-sm font-bold text-white">MOST POPULAR</span>
-            <img src="https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047" alt="BeerGater product" class="w-full h-auto" />
-          </div>
-          <div class="p-6 sm:p-8">
-            <div class="flex items-center justify-between gap-4 flex-wrap">
-              <div>
-                <div class="text-yellow-500 text-lg">★★★★★</div>
-                <h3 class="oswald text-3xl text-[#0a0e1a] mt-2">$299.99</h3>
-              </div>
-              <div class="text-sm font-semibold text-emerald-600 uppercase tracking-[0.2em]">FREE SHIPPING</div>
-            </div>
-            <ul class="mt-6 space-y-3 text-slate-700">
-              <li>✔ Dual tap convenience for faster service</li>
-              <li>✔ Built for game days, patios, and backyard parties</li>
-              <li>✔ Easy setup with included hardware</li>
-              <li>✔ Cold pours for the entire celebration</li>
-              <li>✔ Designed to keep the good times flowing</li>
-            </ul>
-            <div class="mt-8 flex flex-col sm:flex-row gap-4">
-              <button id="addToCartBtn" class="rounded-full bg-[#c0392b] px-6 py-3 font-semibold text-white hover:bg-[#a93226] lift">ADD TO CART 🛒</button>
-              <a href="https://beergater.com/products/beergater-portable-kegerator-tap" target="_blank" rel="noopener noreferrer" class="rounded-full border border-slate-300 px-6 py-3 font-semibold text-[#0a0e1a] hover:bg-slate-100 text-center">BUY NOW ON BEERGATER.COM</a>
-            </div>
-            <div class="mt-6 flex flex-wrap gap-3 text-sm text-slate-600">
-              <span class="rounded-full bg-slate-100 px-3 py-1">Secure checkout</span>
-              <span class="rounded-full bg-slate-100 px-3 py-1">Fast shipping</span>
-              <span class="rounded-full bg-slate-100 px-3 py-1">Tailgate approved</span>
             </div>
           </div>
         </div>
@@ -558,214 +487,157 @@
     </section>
 
     <!-- ============================================================================ -->
-    <!-- ORIGIN STORY SECTION: Deeper brand narrative with image and CTA             -->
-    <!-- Features: Dark split layout with emotional copy and product motivation       -->
+    <!-- CART SIDEBAR SECTION: Slide-in cart and overlay                              -->
+    <!-- Features: Quantity controls, subtotal, checkout trigger                     -->
+    <!-- Mobile Padding: Full-screen safe drawer with scrollable content             -->
     <!-- ============================================================================ -->
-    <section class="bg-[#0a0e1a]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div class="fade-up">
-            <img src="https://beergater.com/cdn/shop/files/The_Birth_of_Our_Beloved_BeerGater.webp?v=1772314778" alt="BeerGater origin story" class="w-full rounded-3xl hero-glow" />
-          </div>
-          <div class="fade-up">
-            <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">ORIGIN STORY</p>
-            <h2 class="oswald text-white text-4xl sm:text-5xl mt-3 leading-tight">Built Because Tailgates Deserve Better</h2>
-            <p class="mt-5 text-slate-300 text-lg leading-8">
-              The idea behind BeerGater came from a simple frustration: the best parties often had the worst drink service. We set out to fix that with a setup that feels premium, performs reliably, and looks right at home beside the grill.
-            </p>
-            <p class="mt-4 text-slate-300 leading-8">
-              Today, BeerGater brings the tap to you so every backyard, driveway, and parking lot can feel like a winning celebration.
-            </p>
-            <a href="#shop" class="inline-flex mt-8 rounded-full bg-[#c0392b] px-6 py-3 font-semibold text-white hover:bg-[#a93226] lift">GET THE ORIGINAL</a>
-          </div>
+    <div id="cartOverlay" class="cart-overlay fixed inset-0 z-50 bg-black/60"></div>
+    <aside id="cartSidebar" class="cart-panel fixed right-0 top-0 z-50 h-full w-full max-w-md bg-[#0d1420] border-l border-white/10 p-5 md:p-6 overflow-y-auto">
+      <div class="flex items-center justify-between">
+        <h3 class="font-['Oswald',sans-serif] text-3xl font-bold">Your Cart</h3>
+        <button id="closeCart" class="rounded-full border border-white/10 bg-white/5 px-3 py-2">✕</button>
+      </div>
+      <div id="cartItems" class="mt-6 space-y-4"></div>
+      <div class="mt-6 border-t border-white/10 pt-5">
+        <div class="flex items-center justify-between text-lg"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+        <button id="checkoutBtn" class="mt-5 w-full rounded-full bg-red-600 px-6 py-4 font-bold uppercase tracking-wide text-white hover:bg-red-500 transition">Checkout</button>
+      </div>
+    </aside>
+
+    <!-- ============================================================================ -->
+    <!-- ORIGIN STORY SECTION: Additional brand narrative                            -->
+    <!-- Features: Visual and persuasive copy, CTA                                  -->
+    <!-- Mobile Padding: Safe spacing on all viewport sizes                         -->
+    <!-- ============================================================================ -->
+    <section class="bg-[#0d1420] text-white" data-section="origin-story">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="fade-up">
+          <img src="https://beergater.com/cdn/shop/files/The_Birth_of_Our_Beloved_BeerGater.webp?v=1772314778" alt="BeerGater origin story" class="rounded-3xl shadow-2xl" />
+        </div>
+        <div class="fade-up">
+          <p class="text-red-400 font-bold tracking-[0.3em] uppercase text-xs mb-3">ORIGIN STORY</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold leading-tight">The birth of a better tailgate.</h2>
+          <p class="mt-5 text-white/75 leading-8">From the first prototype to today, BeerGater has stayed true to the mission: keep the beer flowing, keep the crew hyped, and make every gathering unforgettable.</p>
+          <a href="#contact" class="mt-8 inline-flex rounded-full bg-red-600 px-7 py-4 font-bold uppercase tracking-wide text-white hover:bg-red-500 transition">Talk to Our Team</a>
         </div>
       </div>
     </section>
 
     <!-- ============================================================================ -->
-    <!-- TESTIMONIALS SECTION: Social proof with six review cards                    -->
-    <!-- Features: Light background, three-column grid, gold stars, red top border  -->
+    <!-- TESTIMONIALS SECTION: Social proof cards with ratings                        -->
+    <!-- Features: 6-card grid, simple star ratings, readable snippets               -->
+    <!-- Mobile Padding: Section gutters protect text from clipping                  -->
     <!-- ============================================================================ -->
-    <section class="bg-[#f9f9f9] text-slate-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="text-center max-w-3xl mx-auto fade-up">
-          <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">TESTIMONIALS</p>
-          <h2 class="oswald text-[#0a0e1a] text-4xl sm:text-5xl mt-3">What BeerGater Fans Are Saying</h2>
+    <section class="bg-[#f9f9f9] text-slate-900" data-section="testimonials">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
+        <div class="fade-up max-w-2xl">
+          <p class="text-red-600 font-bold tracking-[0.3em] uppercase text-xs mb-3">TESTIMONIALS</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold">The reviews speak for themselves.</h2>
         </div>
-        <div class="mt-12 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-          <div class="bg-white rounded-2xl border-t-4 border-[#c0392b] p-6 shadow-sm lift fade-up">
-            <div class="text-yellow-500">★★★★★</div>
-            <p class="mt-4 text-slate-700 leading-7">“This thing made our tailgate the spot everyone wanted to be at. The dual taps are a game changer.”</p>
-            <div class="mt-5 font-semibold text-[#0a0e1a]">Brianna Eastman</div>
-          </div>
-          <div class="bg-white rounded-2xl border-t-4 border-[#c0392b] p-6 shadow-sm lift fade-up">
-            <div class="text-yellow-500">★★★★★</div>
-            <p class="mt-4 text-slate-700 leading-7">“Setup was easier than expected and the pours were cold the whole time. Absolutely worth it.”</p>
-            <div class="mt-5 font-semibold text-[#0a0e1a]">Bryan Coles</div>
-          </div>
-          <div class="bg-white rounded-2xl border-t-4 border-[#c0392b] p-6 shadow-sm lift fade-up">
-            <div class="text-yellow-500">★★★★★</div>
-            <p class="mt-4 text-slate-700 leading-7">“We used it for a family cookout and then again for game day. It’s become the centerpiece.”</p>
-            <div class="mt-5 font-semibold text-[#0a0e1a]">Franklin Ross</div>
-          </div>
-          <div class="bg-white rounded-2xl border-t-4 border-[#c0392b] p-6 shadow-sm lift fade-up">
-            <div class="text-yellow-500">★★★★★</div>
-            <p class="mt-4 text-slate-700 leading-7">“The quality is excellent, and the whole experience feels premium from start to finish.”</p>
-            <div class="mt-5 font-semibold text-[#0a0e1a]">David M.</div>
-          </div>
-          <div class="bg-white rounded-2xl border-t-4 border-[#c0392b] p-6 shadow-sm lift fade-up">
-            <div class="text-yellow-500">★★★★★</div>
-            <p class="mt-4 text-slate-700 leading-7">“I bought it for the party, but I keep finding reasons to use it again. It’s that good.”</p>
-            <div class="mt-5 font-semibold text-[#0a0e1a]">Ashley Shipman</div>
-          </div>
-          <div class="bg-white rounded-2xl border-t-4 border-[#c0392b] p-6 shadow-sm lift fade-up">
-            <div class="text-yellow-500">★★★★★</div>
-            <p class="mt-4 text-slate-700 leading-7">“It made hosting way easier, and every guest asked where we got it. Big win.”</p>
-            <div class="mt-5 font-semibold text-[#0a0e1a]">Chelsea Granger</div>
-          </div>
+        <div class="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          <div class="fade-up rounded-3xl bg-white p-6 shadow-sm"><div class="text-yellow-500">★★★★★</div><p class="mt-4">“BeerGater turned our parking lot into the best spot in the stadium.”</p><div class="mt-4 font-bold">— Jason M.</div></div>
+          <div class="fade-up rounded-3xl bg-white p-6 shadow-sm"><div class="text-yellow-500">★★★★★</div><p class="mt-4">“Set up was easy, pours were perfect, and everybody asked where we got it.”</p><div class="mt-4 font-bold">— Lauren S.</div></div>
+          <div class="fade-up rounded-3xl bg-white p-6 shadow-sm"><div class="text-yellow-500">★★★★★</div><p class="mt-4">“The tailgate energy was insane. This thing paid for itself in compliments.”</p><div class="mt-4 font-bold">— Marcus T.</div></div>
+          <div class="fade-up rounded-3xl bg-white p-6 shadow-sm"><div class="text-yellow-500">★★★★★</div><p class="mt-4">“Cold beer, fast pours, zero hassle. Exactly what we wanted.”</p><div class="mt-4 font-bold">— Nicole B.</div></div>
+          <div class="fade-up rounded-3xl bg-white p-6 shadow-sm"><div class="text-yellow-500">★★★★★</div><p class="mt-4">“We used BeerGater at our backyard kickoff and it stole the show.”</p><div class="mt-4 font-bold">— Devin R.</div></div>
+          <div class="fade-up rounded-3xl bg-white p-6 shadow-sm"><div class="text-yellow-500">★★★★★</div><p class="mt-4">“Looks awesome, works even better, and Tap is hilarious.”</p><div class="mt-4 font-bold">— Erica L.</div></div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================================ -->
-    <!-- CTA BANNER: High-contrast urgency-driven conversion strip                   -->
-    <!-- Features: Red gradient, short punchy copy, shop button                     -->
+    <!-- CTA BANNER SECTION: Strong conversion prompt                               -->
+    <!-- Features: Bold message, centered CTA                                         -->
+    <!-- Mobile Padding: Responsive vertical rhythm                                  -->
     <!-- ============================================================================ -->
-    <section class="bg-gradient-to-r from-[#c0392b] to-[#8e2a20]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 text-center">
-        <h2 class="oswald text-white text-4xl sm:text-5xl">Stop Renting Kegs. Start Owning the Tap.</h2>
-        <a href="#shop" class="inline-flex mt-6 rounded-full bg-white px-6 py-3 font-bold text-[#0a0e1a] hover:bg-slate-100 lift">SHOP NOW</a>
+    <section class="bg-gradient-to-r from-[#8B0000] via-[#C0392B] to-[#e14a3b] text-white" data-section="cta-banner">
+      <div class="mx-auto max-w-7xl px-4 py-14 md:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        <div class="fade-up">
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold">Stop Renting Kegs. Start Owning the Tap.</h2>
+        </div>
+        <a href="#shop" class="fade-up inline-flex rounded-full bg-white px-7 py-4 font-bold uppercase tracking-wide text-red-700 hover:bg-red-50 transition">Shop BeerGater</a>
       </div>
     </section>
 
     <!-- ============================================================================ -->
-    <!-- TALK TO TAP SECTION: AI hype-man support module above footer                -->
-    <!-- Features: Dark panel, updated copy, voice/text info cards                   -->
+    <!-- TALK TO TAP SECTION: Fully clickable voice/chat cards                       -->
+    <!-- Features: Two CTA cards with JS hooks and hover states                      -->
+    <!-- Mobile Padding: Safe spacing around large headings and buttons             -->
     <!-- ============================================================================ -->
-    <section class="bg-[#0a0e1a] border-t-2 border-[#c0392b]/30" style="padding:60px 5%; text-align:center;">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">GOT QUESTIONS? JUST ASK</p>
-        <h2 class="oswald text-white text-4xl sm:text-5xl mt-3">🎙️ Talk to Tap — Our AI Hype Man</h2>
-        <p class="mt-5 text-slate-300 text-lg leading-8 max-w-4xl mx-auto">
-          Click the 🔴 red chat bubble in the bottom-right corner. When it opens, hit the <strong>🎙️ TALK</strong> button to go LIVE with Tap's voice — or just type your question. BeerGater's die-hard superfan AI is standing by! 🏈🔥
-        </p>
-        <div class="mt-10 grid md:grid-cols-2 gap-5 text-left">
-          <div class="glass-card rounded-2xl p-6 lift">
-            <div class="text-3xl">🎙️</div>
-            <h3 class="mt-4 oswald text-2xl text-white">VOICE</h3>
-            <p class="mt-2 text-slate-300">Tap the mic icon inside the chat bubble</p>
-          </div>
-          <div class="glass-card rounded-2xl p-6 lift">
-            <div class="text-3xl">💬</div>
-            <h3 class="mt-4 oswald text-2xl text-white">TEXT CHAT</h3>
-            <p class="mt-2 text-slate-300">Type your question anytime</p>
-          </div>
-        </div>
+    <section style="background:#0a0e1a; border-top:2px solid rgba(192,57,43,0.3); padding:80px 5%; text-align:center;">
+      <p style="color:#C0392B; font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:3px; text-transform:uppercase; margin-bottom:12px;">GOT QUESTIONS? JUST ASK</p>
+      <h2 style="color:white; font-family:'Oswald',sans-serif; font-size:48px; font-weight:700; margin-bottom:16px;">Talk to Tap — Our AI Hype Man</h2>
+      <p style="color:rgba(255,255,255,0.7); font-size:16px; max-width:560px; margin:0 auto 48px; line-height:1.7;">BeerGater's die-hard superfan AI is standing by. Click a button below to get LOUD with Tap! 🏈🔥</p>
+      <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; max-width:700px; margin:0 auto;">
+        <!-- VOICE CARD -->
+        <button onclick="openTapVoice()" style="flex:1; min-width:260px; max-width:320px; background:linear-gradient(135deg,#C0392B,#8B0000); border:none; border-radius:20px; padding:40px 32px; cursor:pointer; text-align:center; transition:transform 0.2s, box-shadow 0.2s; box-shadow:0 8px 32px rgba(192,57,43,0.4);" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 48px rgba(192,57,43,0.6)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 32px rgba(192,57,43,0.4)';">
+          <div style="font-size:52px; margin-bottom:16px;">📞</div>
+          <div style="color:white; font-family:'Oswald',sans-serif; font-size:26px; font-weight:700; margin-bottom:10px;">TALK TO TAP</div>
+          <div style="color:rgba(255,255,255,0.85); font-size:14px; line-height:1.6;">Click to start a LIVE voice conversation — Tap is hyped and ready to go! 🎙️</div>
+          <div style="margin-top:20px; background:rgba(255,255,255,0.2); border-radius:50px; padding:10px 24px; display:inline-block; color:white; font-family:'Oswald',sans-serif; font-size:14px; font-weight:700; letter-spacing:1px;">▶ START VOICE</div>
+        </button>
+        <!-- CHAT CARD -->
+        <button onclick="openTapChat()" style="flex:1; min-width:260px; max-width:320px; background:rgba(255,255,255,0.05); border:2px solid rgba(192,57,43,0.4); border-radius:20px; padding:40px 32px; cursor:pointer; text-align:center; transition:transform 0.2s, box-shadow 0.2s, border-color 0.2s; box-shadow:0 8px 24px rgba(0,0,0,0.3);" onmouseover="this.style.transform='translateY(-6px)';this.style.borderColor='#C0392B';this.style.boxShadow='0 16px 40px rgba(192,57,43,0.3)';" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='rgba(192,57,43,0.4)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.3)';">
+          <div style="font-size:52px; margin-bottom:16px;">💬</div>
+          <div style="color:white; font-family:'Oswald',sans-serif; font-size:26px; font-weight:700; margin-bottom:10px;">TEXT TAP</div>
+          <div style="color:rgba(255,255,255,0.7); font-size:14px; line-height:1.6;">Prefer to type? No problem — Tap is just as hype in text mode! 🍺</div>
+          <div style="margin-top:20px; background:rgba(192,57,43,0.2); border:1px solid rgba(192,57,43,0.5); border-radius:50px; padding:10px 24px; display:inline-block; color:white; font-family:'Oswald',sans-serif; font-size:14px; font-weight:700; letter-spacing:1px;">▶ OPEN CHAT</div>
+        </button>
       </div>
     </section>
 
     <!-- ============================================================================ -->
-    <!-- CONTACT SECTION: Lead form and business information                         -->
-    <!-- Features: Two-column white layout, accessible form inputs, support details  -->
+    <!-- CONTACT SECTION: Form and contact information                               -->
+    <!-- Features: Two-column layout, clear inputs, service details                  -->
+    <!-- Mobile Padding: Form fields and copy remain comfortably inset               -->
     <!-- ============================================================================ -->
-    <section id="contact" class="bg-white text-slate-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div class="grid lg:grid-cols-2 gap-12">
-          <div class="fade-up">
-            <p class="text-[#c0392b] uppercase tracking-[0.24em] text-sm font-bold">CONTACT</p>
-            <h2 class="oswald text-[#0a0e1a] text-4xl sm:text-5xl mt-3">Reach Out to the BeerGater Team</h2>
-            <p class="mt-4 text-slate-700 leading-8 max-w-xl">
-              Have a question about the product, shipping, or setup? Send us a message and we’ll get back to you as soon as possible.
-            </p>
-            <div class="mt-8 space-y-4">
-              <div><span class="font-semibold text-[#0a0e1a]">Email:</span> support@beergater.com</div>
-              <div><span class="font-semibold text-[#0a0e1a]">Hours:</span> Monday–Friday, 9am–5pm</div>
-              <div><span class="font-semibold text-[#0a0e1a]">Perfect for:</span> Tailgates, parties, patios, and game day</div>
-            </div>
-          </div>
-          <div class="fade-up">
-            <form class="contact-form bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
-              <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label for="name" class="block text-sm font-semibold mb-2">Name</label>
-                  <input id="name" type="text" class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#c0392b]" placeholder="Your name">
-                </div>
-                <div>
-                  <label for="email" class="block text-sm font-semibold mb-2">Email</label>
-                  <input id="email" type="email" class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#c0392b]" placeholder="you@example.com">
-                </div>
-              </div>
-              <div class="mt-4">
-                <label for="subject" class="block text-sm font-semibold mb-2">Subject</label>
-                <input id="subject" type="text" class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#c0392b]" placeholder="How can we help?">
-              </div>
-              <div class="mt-4">
-                <label for="message" class="block text-sm font-semibold mb-2">Message</label>
-                <textarea id="message" rows="5" class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#c0392b]" placeholder="Tell us what you need..."></textarea>
-              </div>
-              <button type="button" class="mt-6 w-full rounded-full bg-[#c0392b] px-6 py-3 font-semibold text-white hover:bg-[#a93226] lift">SEND MESSAGE</button>
-            </form>
+    <section id="contact" class="bg-white text-slate-900" data-section="contact">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
+        <div class="fade-up">
+          <p class="text-red-600 font-bold tracking-[0.3em] uppercase text-xs mb-3">CONTACT</p>
+          <h2 class="font-['Oswald',sans-serif] text-4xl sm:text-5xl font-bold">Let’s talk tailgates.</h2>
+          <p class="mt-5 text-slate-700 leading-8">Have a question about BeerGater, wholesale, events, or how to bring the party to your next big game? Send us a note and we’ll get back to you fast.</p>
+          <form class="contact-form mt-8 grid gap-4">
+            <input type="text" placeholder="Your Name" class="w-full rounded-2xl border border-slate-200 px-4 py-4 outline-none focus:border-red-500" />
+            <input type="email" placeholder="Email Address" class="w-full rounded-2xl border border-slate-200 px-4 py-4 outline-none focus:border-red-500" />
+            <textarea rows="5" placeholder="Tell us what you need" class="w-full rounded-2xl border border-slate-200 px-4 py-4 outline-none focus:border-red-500"></textarea>
+            <button type="button" class="rounded-full bg-red-600 px-7 py-4 font-bold uppercase tracking-wide text-white hover:bg-red-500 transition">Send Message</button>
+          </form>
+        </div>
+        <div class="fade-up rounded-[2rem] bg-[#0d1420] text-white p-8">
+          <h3 class="font-['Oswald',sans-serif] text-3xl font-bold">Contact Info</h3>
+          <div class="mt-6 space-y-4 text-white/75">
+            <p>📍 BeerGater HQ</p>
+            <p>📧 hello@beergater.com</p>
+            <p>☎️ (555) 012-TAILGATE</p>
+            <p>⏰ Mon–Fri, 9AM–5PM</p>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- ============================================================================ -->
-    <!-- FOOTER SECTION: Brand closeout with links and social support                -->
-    <!-- Features: Dark footer, red top border, compact navigation                   -->
-    <!-- ============================================================================ -->
-    <footer class="bg-[#0a0e1a] border-t-[3px] border-[#c0392b]">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div>
-            <div class="flex items-center gap-3 flex-wrap">
-              <span class="text-[#c0392b] font-bold uppercase tracking-[0.22em] text-xs sm:text-sm">THE ORIGINAL</span>
-              <span class="oswald text-white text-3xl">BeerGater</span>
-            </div>
-            <p class="mt-3 text-slate-400">The original tailgate experience for fans who want more from every pour.</p>
-          </div>
-          <div class="flex flex-wrap gap-4 text-slate-300">
-            <a href="#home" class="hover:text-white">HOME</a>
-            <a href="#how-it-works" class="hover:text-white">HOW IT WORKS</a>
-            <a href="#shop" class="hover:text-white">SHOP</a>
-            <a href="#about" class="hover:text-white">ABOUT</a>
-            <a href="#contact" class="hover:text-white">CONTACT</a>
-          </div>
-          <div class="flex gap-4 text-xl">
-            <a href="#" aria-label="Instagram" class="hover:text-[#c0392b]">📸</a>
-            <a href="#" aria-label="Facebook" class="hover:text-[#c0392b]">📘</a>
-            <a href="#" aria-label="X" class="hover:text-[#c0392b]">✖️</a>
-          </div>
-        </div>
-        <div class="mt-8 pt-6 border-t border-white/10 text-sm text-slate-500 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
-          <p>Copyright © 2026 BeerGater. All rights reserved.</p>
-          <p>Built for the fans, the fire, and the first pour.</p>
-        </div>
-      </div>
-    </footer>
   </main>
 
   <!-- ============================================================================ -->
-  <!-- CART SIDEBAR: Sliding cart panel with overlay and checkout CTA              -->
-  <!-- Features: Accessible drawer, item management, summary totals               -->
+  <!-- FOOTER SECTION: Final brand area with links and copyright                   -->
+  <!-- Features: Dark footer, top border, social links                             -->
+  <!-- Mobile Padding: Compact yet padded for smaller screens                      -->
   <!-- ============================================================================ -->
-  <div id="cartOverlay" class="cart-overlay fixed inset-0 bg-black/60 opacity-0 pointer-events-none z-50"></div>
-  <aside id="cartSidebar" class="cart-panel fixed top-0 right-0 h-full w-full max-w-md bg-white text-slate-900 shadow-2xl z-[60] translate-x-full flex flex-col">
-    <div class="p-5 border-b flex items-center justify-between">
-      <h3 class="oswald text-2xl">Your Cart</h3>
-      <button id="closeCartBtn" class="text-2xl leading-none">×</button>
-    </div>
-    <div id="cartItems" class="flex-1 p-5 space-y-4 overflow-y-auto">
-      <p id="emptyCartText" class="text-slate-500">Your cart is empty.</p>
-    </div>
-    <div class="p-5 border-t">
-      <div class="flex items-center justify-between font-semibold">
-        <span>Total</span>
-        <span id="cartTotal">$0.00</span>
+  <footer class="bg-[#0d1420] text-white border-t-4 border-red-600" data-section="footer">
+    <div class="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <div class="text-red-500 font-bold tracking-[0.25em] text-xs uppercase">THE ORIGINAL</div>
+        <div class="font-['Oswald',sans-serif] text-3xl">BeerGater</div>
       </div>
-      <button id="checkoutBtn" class="mt-4 w-full rounded-full bg-[#c0392b] px-5 py-3 font-semibold text-white hover:bg-[#a93226]">CHECKOUT</button>
+      <div class="flex flex-wrap justify-center gap-5 text-white/75 text-sm">
+        <a href="#home" class="hover:text-red-400 transition">HOME</a>
+        <a href="#how-it-works" class="hover:text-red-400 transition">HOW IT WORKS</a>
+        <a href="#shop" class="hover:text-red-400 transition">SHOP</a>
+        <a href="#about" class="hover:text-red-400 transition">ABOUT</a>
+        <a href="#contact" class="hover:text-red-400 transition">CONTACT</a>
+      </div>
+      <div class="text-white/60 text-sm">© 2026 BeerGater. All rights reserved.</div>
     </div>
-  </aside>
+  </footer>
 
   
   <script src="script.js"></script>
