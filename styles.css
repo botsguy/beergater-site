@@ -1,44 +1,16 @@
-/* ===== GLOBAL STYLES ===== */
-    /* Mobile-first structure with safe padding, smooth scrolling, and dark BeerGater palette */
-    html { scroll-behavior: smooth; }
-    body { margin: 0; background: #0a0e1a; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; }
-    .section-pad { padding: 4rem 1rem; }
-    @media (min-width: 640px) { .section-pad { padding: 5rem 1.5rem; } }
-    @media (min-width: 1024px) { .section-pad { padding: 6rem 3rem; } }
-
-    /* ===== SCROLL PROGRESS BAR ===== */
-    /* Fixed top indicator used for page reading progress */
-    #scrollProgress { position: fixed; top: 0; left: 0; height: 4px; width: 0; background: linear-gradient(90deg,#ff3b30,#c0392b); z-index: 9998; }
-
-    /* ===== NAVIGATION ===== */
-    /* Sticky dark navy navigation with shadow-on-scroll behavior */
-    .nav-shadow { box-shadow: 0 10px 30px rgba(0,0,0,.35); }
-
-    /* ===== HERO ANIMATION ===== */
-    /* Floating glow motion for hero product visual */
-    @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-    .floaty { animation: floaty 5s ease-in-out infinite; }
-
-    /* ===== FADE UP ===== */
-    /* Subtle reveal animation for sections and cards */
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    .fade-up { opacity: 0; transform: translateY(24px); }
-    .fade-up.show { animation: fadeUp .7s ease forwards; }
-
-    /* ===== GLOW EFFECT ===== */
-    /* Red glow behind the main product image */
-    .red-glow { box-shadow: 0 0 60px rgba(192,57,43,.45); }
-
-    /* ===== CART SIDEBAR ===== */
-    /* Slide-in cart panel and dark overlay */
-    .cart-hidden { transform: translateX(100%); }
-    .overlay-hidden { opacity: 0; pointer-events: none; }
-
-    /* ===== VIDEO WRAPPER ===== */
-    /* Keeps hero video responsive with sound control overlay */
-    .video-wrap { position: relative; border-radius: 24px; overflow: hidden; }
-
-    /* ===== CTA BUTTONS ===== */
-    /* High-contrast buttons for primary and secondary actions */
-    .btn-red { background: #c0392b; color: #fff; }
-    .btn-ghost { border: 1px solid rgba(255,255,255,.25); color: #fff; background: rgba(255,255,255,.04); }
+/* ===== GLOBAL BASE STYLES ===== */
+    body{font-family:Arial,Helvetica,sans-serif;background:#0a0e1a;color:#fff;overflow-x:hidden}
+    .oswald{font-family:'Oswald',sans-serif}
+    /* ===== ANIMATION STYLES ===== */
+    .fade-up{opacity:0;transform:translateY(28px);transition:all .8s ease}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+    .floaty{animation:floaty 5s ease-in-out infinite}
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    /* ===== SCROLL PROGRESS BAR STYLES ===== */
+    #scrollProgress{width:0%}
+    /* ===== CART SIDEBAR STYLES ===== */
+    .cart-open #cartSidebar{transform:translateX(0)}
+    .cart-open #cartOverlay{opacity:1;pointer-events:auto}
+    /* ===== VIDEO SECTION STYLES ===== */
+    .video-section{background:#060b14;padding:100px 5%;text-align:center}
+    .video-overlay-btn{pointer-events:none}
