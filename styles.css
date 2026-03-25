@@ -1,18 +1,40 @@
-html { scroll-behavior: smooth; }
-    body { font-family: Inter, system-ui, sans-serif; }
-    .oswald { font-family: 'Oswald', sans-serif; }
-    @keyframes floatAnim { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-    .float-anim { animation: floatAnim 4.5s ease-in-out infinite; }
-    .fade-up { opacity: 0; transform: translateY(30px); transition: all .6s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    @media (max-width: 1024px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 640px) { .card-grid { grid-template-columns: repeat(1, minmax(0, 1fr)); } }
-    /* ===== FLOATING TAP BUTTONS ===== */
-    #float-stack { position: fixed; bottom: 28px; right: 28px; z-index: 99999; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; pointer-events: none; }
-    #float-stack > * { pointer-events: all; }
-    .float-btn { display: flex; align-items: center; gap: 10px; border: none; border-radius: 50px; padding: 14px 22px; font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease; text-decoration: none; }
-    .float-btn:hover { transform: translateY(-3px); }
-    #btn-chat { background: linear-gradient(135deg, #C0392B, #8B0000); color: white; box-shadow: 0 8px 28px rgba(192,57,43,0.5); animation: btnPulse 2.5s ease-in-out infinite; }
-    #btn-voice { background: #0a0e1a; color: white; border: 2px solid rgba(192,57,43,0.5); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
-    @keyframes btnPulse { 0%,100% { box-shadow: 0 8px 28px rgba(192,57,43,0.5), 0 0 0 0 rgba(192,57,43,0.3); } 50% { box-shadow: 0 8px 28px rgba(192,57,43,0.5), 0 0 0 12px rgba(192,57,43,0); } }
+/* ===== BASE STYLES ===== */
+    /* Mobile-first foundation with dark theme accents and smooth scrolling */
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, sans-serif; background: #0a0e1a; color: #e5e7eb; overflow-x: hidden; }
+    .font-oswald { font-family: Oswald, sans-serif; }
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+    .fade-up.in-view { opacity: 1; transform: translateY(0); }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    /* Fixed red bar at top with z-index below native widget */
+    #scrollProgress { position: fixed; top: 0; left: 0; height: 4px; width: 0%; background: linear-gradient(90deg, #ef4444, #dc2626); z-index: 9998; }
+
+    /* ===== HERO IMAGE FLOAT ===== */
+    /* Gentle vertical float animation for hero visual */
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .hero-float { animation: floaty 6s ease-in-out infinite; }
+
+    /* ===== STAT PULSE ===== */
+    /* Subtle highlight for stat cards and badges */
+    .stat-glow { box-shadow: 0 0 0 1px rgba(239,68,68,.18), 0 0 40px rgba(239,68,68,.15); }
+
+    /* ===== CUSTOM VIDEO CONTROLS ===== */
+    /* Ensure video and overlay button remain polished and accessible */
+    .video-shell { box-shadow: 0 25px 80px rgba(0,0,0,.45); }
+
+    /* ===== CART SIDEBAR ===== */
+    /* Off-canvas cart with overlay and smooth transitions */
+    .cart-panel { transform: translateX(100%); transition: transform .35s ease; }
+    .cart-panel.open { transform: translateX(0); }
+
+    /* ===== NAV SHADOW ===== */
+    /* Adds depth when scrolling past the top of the page */
+    .nav-scrolled { box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+
+    /* ===== ANIMATED HERO TEXT ===== */
+    /* Staggered headline lines for dramatic impact */
+    .line-1 { animation: reveal .9s ease both .1s; }
+    .line-2 { animation: reveal .9s ease both .25s; }
+    .line-3 { animation: reveal .9s ease both .4s; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
