@@ -1,176 +1,127 @@
-// ===== SCROLL PROGRESS BAR =====
-    // Function: updateScrollProgress()
-    // Purpose: Update the top progress indicator as the user scrolls the page.
-    function updateScrollProgress() {
-      const progress = document.getElementById('scrollProgress');
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const percentage = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      progress.style.width = percentage + '%';
-    }
+const progressBar = document.getElementById('progress-bar');
+    const nav = document.getElementById('siteNav');
+    const countNodes = document.querySelectorAll('.count-num');
+    const fadeNodes = document.querySelectorAll('.fade-up');
+    const cartCountEl = document.getElementById('cart-count');
+    const cartSidebar = document.getElementById('cartSidebar');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const toast = document.getElementById('toast');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const cartIconBtn = document.getElementById('cart-icon-btn');
+    const closeCartBtn = document.getElementById('closeCart');
+    const heroVideo = document.getElementById('heroVideo');
+    const soundBtn = document.getElementById('soundBtn');
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
 
-    // ===== NAV SHADOW ON SCROLL =====
-    // Function: updateNavShadow()
-    // Purpose: Add subtle depth to the sticky navigation while scrolling.
-    function updateNavShadow() {
-      const header = document.querySelector('header');
-      header.classList.toggle('shadow-lg', window.scrollY > 10);
-      header.classList.toggle('shadow-black/20', window.scrollY > 10);
-    }
+    let cartCount = 0;
+    let cartOpen = false;
 
-    // ===== FADE-UP REVEAL OBSERVER =====
-    // Function: setupFadeUpObserver()
-    // Purpose: Reveal sections with a smooth rise-and-fade animation when visible.
-    function setupFadeUpObserver() {
-      const elements = document.querySelectorAll('.fade-up');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      }, { threshold: 0.15 });
-      elements.forEach((el) => observer.observe(el));
-    }
-
-    // ===== COUNT-UP STAT ANIMATION =====
-    // Function: animateCountUp(el)
-    // Purpose: Animate stat numbers into place for stronger visual impact.
-    function animateCountUp(el) {
-      const targetText = el.textContent.trim();
-      const numericMatch = targetText.match(/[\d.]+/);
-      if (!numericMatch) return;
-      const target = parseFloat(numericMatch[0]);
-      const suffix = targetText.replace(/[\d.]+/g, '');
-      const isInteger = Number.isInteger(target);
-      let current = 0;
-      const duration = 1400;
-      const start = performance.now();
-
-      function tick(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        current = target * (0.15 + 0.85 * progress);
-        el.textContent = (isInteger ? Math.floor(current) : current.toFixed(1)) + suffix;
-        if (progress < 1) requestAnimationFrame(tick);
-        else el.textContent = targetText;
-      }
-
-      requestAnimationFrame(tick);
-    }
-
-    // ===== COUNT-UP ON VIEW =====
-    // Function: setupCountUpObserver()
-    // Purpose: Trigger animated stat count-up when stats enter the viewport.
-    function setupCountUpObserver() {
-      const nums = document.querySelectorAll('.count-num');
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateCountUp(entry.target);
-            obs.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.6 });
-      nums.forEach((el) => observer.observe(el));
-    }
-
-    // ===== CART SIDEBAR LOGIC =====
-    // Function: openCart()
-    // Purpose: Show the cart sidebar and overlay.
-    function openCart() {
-      document.getElementById('cartSidebar').classList.add('open');
-      document.getElementById('overlay').classList.remove('hidden');
-    }
-
-    // Function: closeCart()
-    // Purpose: Hide the cart sidebar and overlay.
-    function closeCart() {
-      document.getElementById('cartSidebar').classList.remove('open');
-      document.getElementById('overlay').classList.add('hidden');
-    }
-
-    // Function: showToast(message)
-    // Purpose: Display a temporary confirmation message.
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.add('show');
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.remove('hidden');
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+      window.__toastTimer = setTimeout(() => toast.classList.add('hidden'), 3000);
     }
 
-    // Function: updateCartUI()
-    // Purpose: Keep cart count and total in sync with the visible state.
-    function updateCartUI() {
-      document.getElementById('cart-count').textContent = '1';
-      document.getElementById('cartQty').textContent = '1';
-      document.getElementById('cartTotal').textContent = '299.99';
+    function updateCart() {
+      cartCountEl.textContent = cartCount;
+      cartItems.innerHTML = cartCount ? `<div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+        <div class="font-semibold">The Original BeerGater Kit</div>
+        <div class="text-sm text-slate-500 mt-1">Qty: ${cartCount}</div>
+        <div class="text-red-600 font-bold mt-2">$299.99</div>
+      </div>` : '<p class="text-slate-500">Your cart is empty.</p>';
+      cartTotal.textContent = cartCount ? '$299.99' : '$0.00';
     }
 
-    // ===== VIDEO SOUND TOGGLE =====
-    // Function: setupVideoSoundToggle()
-    // Purpose: Enable users to unmute the hero video and toggle mute back on.
-    function setupVideoSoundToggle() {
-      const vid = document.getElementById('heroVideo');
-      const btn = document.getElementById('soundBtn');
-      btn.addEventListener('click', function () {
-        if (vid.muted) {
-          vid.muted = false;
-          vid.currentTime = 0;
-          vid.play();
-          btn.textContent = '🔇 Mute';
-        } else {
-          vid.muted = true;
-          btn.textContent = '🔊 Turn On Sound';
+    function openCart() {
+      cartSidebar.style.right = '0';
+      cartOverlay.classList.remove('hidden');
+      cartOpen = true;
+    }
+
+    function closeCart() {
+      cartSidebar.style.right = '-400px';
+      cartOverlay.classList.add('hidden');
+      cartOpen = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      progressBar.style.width = pct + '%';
+      nav.style.boxShadow = window.scrollY > 50 ? '0 10px 30px rgba(0,0,0,.35)' : 'none';
+    });
+
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    fadeNodes.forEach(function(el) { revealObserver.observe(el); });
+
+    const countObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        if (el.dataset.animated) return;
+        el.dataset.animated = '1';
+        const target = parseInt(el.dataset.target, 10) || 0;
+        const start = performance.now();
+        function step(now) {
+          const p = Math.min((now - start) / 1500, 1);
+          el.textContent = Math.floor(target * p);
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.4 });
+
+    countNodes.forEach(function(el) { countObserver.observe(el); });
+
+    addToCartBtn.addEventListener('click', function() {
+      cartCount += 1;
+      updateCart();
+      openCart();
+      showToast('✓ BeerGater Kit added to cart!');
+    });
+
+    cartIconBtn.addEventListener('click', function() {
+      cartOpen ? closeCart() : openCart();
+    });
+
+    closeCartBtn.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    soundBtn.addEventListener('click', function() {
+      if (heroVideo.muted) {
+        heroVideo.muted = false;
+        heroVideo.currentTime = 0;
+        heroVideo.play();
+        soundBtn.textContent = '🔇 Mute';
+      } else {
+        heroVideo.muted = true;
+        soundBtn.textContent = '🔊 Turn On Sound';
+      }
+    });
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      formSuccess.classList.remove('hidden');
+      contactForm.reset();
+      setTimeout(function() { formSuccess.classList.add('hidden'); }, 3500);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
-    }
+    });
 
-    // ===== SMOOTH SCROLL ANCHORS =====
-    // Function: setupSmoothAnchors()
-    // Purpose: Smoothly scroll internal anchor links to their sections.
-    function setupSmoothAnchors() {
-      document.querySelectorAll('a[href^="#"]').forEach((link) => {
-        link.addEventListener('click', function (e) {
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      });
-    }
-
-    // ===== CONTACT FORM SUBMIT =====
-    // Function: handleContactSubmit(e)
-    // Purpose: Simulate a successful message send and show confirmation.
-    function handleContactSubmit(e) {
-      e.preventDefault();
-      const success = document.getElementById('formSuccess');
-      success.classList.remove('hidden');
-      e.target.reset();
-    }
-
-    // ===== INITIALIZE PAGE INTERACTIONS =====
-    // Function: init()
-    // Purpose: Wire up all page interactions after DOM content is available.
-    function init() {
-      updateScrollProgress();
-      updateNavShadow();
-      setupFadeUpObserver();
-      setupCountUpObserver();
-      setupVideoSoundToggle();
-      setupSmoothAnchors();
-      updateCartUI();
-
-      window.addEventListener('scroll', () => { updateScrollProgress(); updateNavShadow(); }, { passive: true });
-      document.getElementById('addToCartBtn').addEventListener('click', function () {
-        openCart();
-        updateCartUI();
-        showToast('Added to cart');
-      });
-      document.getElementById('closeCart').addEventListener('click', closeCart);
-      document.getElementById('overlay').addEventListener('click', closeCart);
-      document.getElementById('cart-icon').addEventListener('click', openCart);
-      document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
-    }
-
-    document.addEventListener('DOMContentLoaded', init);
+    updateCart();
