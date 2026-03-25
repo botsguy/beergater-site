@@ -1,19 +1,25 @@
-/* ===== BASE STYLES ===== */
-    /* Mobile-first typography and color system with controlled overflow */
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background:#0a0e1a; color:#fff; overflow-x:hidden; }
-    h1,h2,h3,.font-oswald { font-family:'Oswald', sans-serif; }
+/* ===== GLOBAL BASE STYLES ===== */
+    body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0a0e1a;color:#f8fafc;overflow-x:hidden}
+    .oswald{font-family:"Oswald",sans-serif}
+    html{scroll-behavior:smooth}
     /* ===== SCROLL PROGRESS BAR ===== */
-    /* Fixed top bar used for reading progress */
-    #progress-bar { width:0%; transition:width .12s linear; }
-    /* ===== HERO IMAGE FLOAT ===== */
-    /* Subtle motion to create premium product emphasis */
-    .float-anim { animation: float 6s ease-in-out infinite; }
-    @keyframes float { 0%,100%{ transform:translateY(0px);} 50%{ transform:translateY(-12px);} }
-    /* ===== FADE UP REVEAL ===== */
-    /* IntersectionObserver-driven entrance animation for sections */
-    .fade-up { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
-    .fade-up.visible { opacity:1; transform:translateY(0); }
-    /* ===== HERO GRADIENT TEXT ===== */
-    /* Highlight accents and borders across sections */
-    .accent-border { border-color:#C0392B; }
+    .scroll-progress{position:fixed;top:0;left:0;height:4px;width:0;background:#c0392b;z-index:9998;box-shadow:0 0 12px rgba(192,57,43,.65)}
+    /* ===== HERO IMAGE GLOW ===== */
+    .hero-glow{filter:drop-shadow(0 0 26px rgba(192,57,43,.45));animation:floaty 6s ease-in-out infinite}
+    /* ===== FLOAT ANIMATION ===== */
+    @keyframes floaty{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}
+    /* ===== FADE UP ANIMATION ===== */
+    .fade-up{opacity:0;transform:translateY(20px);transition:all .8s ease}
+    .fade-up.in-view{opacity:1;transform:translateY(0)}
+    /* ===== CART PANEL STYLES ===== */
+    .cart-panel{transition:transform .35s ease}
+    .cart-overlay{transition:opacity .35s ease}
+    /* ===== HOVER LIFT ===== */
+    .lift{transition:transform .25s ease,box-shadow .25s ease}
+    .lift:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.28)}
+    /* ===== GLASS CARD ===== */
+    .glass-card{background:rgba(255,255,255,.08);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12)}
+    /* ===== VIDEO OVERLAY ===== */
+    .video-wrap{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 0 0 3px #c0392b}
+    /* ===== COUNTER ===== */
+    .counter{font-variant-numeric:tabular-nums}
