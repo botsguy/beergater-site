@@ -1,125 +1,141 @@
 // ===== SCROLL PROGRESS BAR =====
     // Function: updateScrollProgress()
-    // Purpose: Update the fixed top scroll bar based on page position
+    // Purpose: Update the top progress indicator as the page is scrolled
     function updateScrollProgress() {
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      document.getElementById('scrollProgress').style.width = (scrollTop / height) * 100 + '%';
+      var scrollTop = window.scrollY || document.documentElement.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      var bar = document.getElementById('scrollProgress');
+      if (bar) bar.style.width = progress + '%';
     }
 
-    // ===== NAV SHADOW =====
-    // Function: updateNavShadow()
-    // Purpose: Add shadow when user scrolls past top to improve header contrast
-    function updateNavShadow() {
-      document.getElementById('siteHeader').classList.toggle('nav-shadow', window.scrollY > 20);
+    // ===== NAV SHADOW ON SCROLL =====
+    // Function: updateHeaderShadow()
+    // Purpose: Add subtle shadow when the header is no longer at top
+    function updateHeaderShadow() {
+      var header = document.getElementById('siteHeader');
+      if (!header) return;
+      header.style.boxShadow = (window.scrollY > 10) ? '0 10px 30px rgba(0,0,0,0.35)' : 'none';
     }
 
-    // ===== FADE-UP OBSERVER =====
-    // Function: revealOnScroll()
-    // Purpose: Reveal sections and cards as they enter the viewport
-    function revealOnScroll() {
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('show'); obs.unobserve(entry.target); } });
+    // ===== FADE-UP REVEAL =====
+    // Function: revealOnView()
+    // Purpose: Reveal elements with .fade-up when they enter viewport
+    function revealOnView() {
+      var els = document.querySelectorAll('.fade-up');
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
       }, { threshold: 0.15 });
-      document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+      els.forEach(function(el) { io.observe(el); });
     }
 
     // ===== COUNT-UP ANIMATION =====
     // Function: animateCounters()
-    // Purpose: Animate numerical stats when the stats bar becomes visible
+    // Purpose: Increment statistic values using requestAnimationFrame
     function animateCounters() {
-      const els = document.querySelectorAll('.count-up');
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
+      var counters = document.querySelectorAll('.count-num');
+      var io = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(function(entry) {
           if (!entry.isIntersecting) return;
-          entry.target.querySelectorAll ? null : null;
-          document.querySelectorAll('.count-up').forEach(el => {
-            const target = +el.dataset.target, step = Math.ceil(target / 60);
-            let cur = 0;
-            const t = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(t); } el.textContent = cur; }, 20);
-          });
-          obs.disconnect();
+          var el = entry.target;
+          var target = parseInt(el.getAttribute('data-target') || '0', 10);
+          var start = 0;
+          var duration = 1400;
+          var startTime = null;
+          function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            el.textContent = Math.floor(progress * target);
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+          observer.unobserve(el);
         });
-      }, { threshold: 0.4 });
-      if (els[0]) obs.observe(els[0]);
+      }, { threshold: 0.5 });
+      counters.forEach(function(c) { io.observe(c); });
     }
 
-    // ===== CART LOGIC =====
-    // Function: renderCart()
-    // Purpose: Refresh cart sidebar items, total, and badge count
-    const cart = [{ name: 'BeerGater v9', price: 299.99, qty: 1 }];
-    function renderCart() {
-      const items = document.getElementById('cartItems');
-      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
-      document.getElementById('cartTotal').textContent = '$' + total.toFixed(2);
-      items.innerHTML = cart.map(i => `<div class="flex justify-between items-center bg-white/5 rounded-2xl p-4"><div><div class="font-semibold">${i.name}</div><div class="text-white/60 text-sm">Qty ${i.qty}</div></div><div class="font-semibold">$${(i.price * i.qty).toFixed(2)}</div></div>`).join('');
+    // ===== CART DRAWER =====
+    // Function: openCart()
+    // Purpose: Show the cart sidebar and overlay
+    function openCart() { document.body.classList.add('cart-open'); }
+
+    // Function: closeCart()
+    // Purpose: Hide the cart sidebar and overlay
+    function closeCart() { document.body.classList.remove('cart-open'); }
+
+    // Function: updateCart()
+    // Purpose: Update cart badge count in the navigation
+    function updateCart(count) {
+      var badge = document.getElementById('cart-count');
+      if (badge) badge.textContent = count;
     }
 
-    // ===== CART TOGGLE =====
-    // Function: openCart()/closeCart()
-    // Purpose: Show and hide the slide-in cart sidebar and overlay
-    function openCart(){ document.getElementById('cartSidebar').classList.remove('cart-hidden'); document.getElementById('cartOverlay').classList.remove('overlay-hidden'); }
-    function closeCart(){ document.getElementById('cartSidebar').classList.add('cart-hidden'); document.getElementById('cartOverlay').classList.add('overlay-hidden'); }
-
-    // ===== HERO VIDEO SOUND TOGGLE =====
-    // Function: toggleVideoSound()
-    // Purpose: Mute/unmute hero video and update button label
-    function toggleVideoSound() {
-      const v = document.getElementById('heroVideo');
-      const b = document.getElementById('soundBtn');
-      v.muted = !v.muted;
-      b.textContent = v.muted ? '🔇 Sound Off' : '🔊 Sound On';
+    // Function: showToast()
+    // Purpose: Display a temporary purchase confirmation message
+    function showToast(message) {
+      var toast = document.createElement('div');
+      toast.className = 'fixed bottom-6 left-6 z-[100] bg-green-600 text-white px-5 py-4 rounded-2xl shadow-2xl';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(function() { toast.remove(); }, 2200);
     }
 
-    // ===== SMOOTH SCROLL =====
-    // Function: smoothScrollTo()
-    // Purpose: Provide reliable anchor navigation with offset awareness
-    function smoothScrollTo(hash) {
-      const el = document.querySelector(hash);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // ===== CONTACT FORM SUCCESS =====
+    // Function: handleContactSuccess()
+    // Purpose: Simulate successful contact submission for the landing page form
+    function handleContactSuccess() {
+      var btn = document.getElementById('contactSubmitBtn');
+      var success = document.getElementById('contactSuccess');
+      if (btn && success) {
+        btn.addEventListener('click', function() {
+          success.classList.remove('hidden');
+        });
+      }
     }
 
-    // ===== CONTACT FORM =====
-    // Function: handleContactSubmit()
-    // Purpose: Simulate success state for the contact form submission
-    function handleContactSubmit(e) {
-      e.preventDefault();
-      document.getElementById('contactSuccess').classList.remove('hidden');
-      e.target.reset();
-    }
-
-    // ===== PURCHASE HANDLER =====
-    // Function: handlePurchase()
-    // Purpose: Send the BeerGater product through built-in payment processing
-    function handlePurchase() {
-      const email = prompt('Enter your email to continue:');
-      const name = prompt('Enter your name (optional):') || '';
-      if (!email) return;
-      window.__processPayment({ amountCents: 29999, email: email, productName: 'BeerGater v9', productDescription: 'The original tailgate experience', name: name, quantity: 1 });
-    }
-
-    // ===== INITIALIZATION =====
-    // Function: initBeerGaterPage()
-    // Purpose: Wire up scrolling, animations, cart, video, and navigation behavior
-    function initBeerGaterPage() {
-      renderCart();
-      revealOnScroll();
-      animateCounters();
+    document.addEventListener('DOMContentLoaded', function() {
       updateScrollProgress();
-      updateNavShadow();
+      updateHeaderShadow();
+      revealOnView();
+      animateCounters();
+      handleContactSuccess();
 
-      window.addEventListener('scroll', () => { updateScrollProgress(); updateNavShadow(); });
+      var addToCartBtn = document.getElementById('addToCartBtn');
+      var closeCartBtn = document.getElementById('closeCart');
+      var cartIcon = document.getElementById('cart-icon');
+      var cartOverlay = document.getElementById('cartOverlay');
+      if (addToCartBtn) addToCartBtn.addEventListener('click', function() { updateCart(1); openCart(); showToast('Added to cart!'); });
+      if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+      if (cartIcon) cartIcon.addEventListener('click', openCart);
+      if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
 
-      document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const href = a.getAttribute('href'); if (href.length > 1) { e.preventDefault(); smoothScrollTo(href); } }));
+      // ===== VIDEO SOUND OVERLAY =====
+      // Function: activateVideoSound()
+      // Purpose: Unmute, restart, and play the hero video after overlay click
+      var bgVideo = document.getElementById('bgVideo');
+      var soundOverlay = document.getElementById('soundOverlay');
+      if (bgVideo && soundOverlay) { soundOverlay.addEventListener('click', function() { bgVideo.muted = false; bgVideo.currentTime = 0; bgVideo.play(); soundOverlay.style.display = 'none'; });
+      }
 
-      document.getElementById('soundBtn').addEventListener('click', toggleVideoSound);
-      document.getElementById('addToCartBtn').addEventListener('click', openCart);
-      document.getElementById('buyNowBtn').addEventListener('click', handlePurchase);
-      document.getElementById('checkoutBtn').addEventListener('click', handlePurchase);
-      document.getElementById('closeCartBtn').addEventListener('click', closeCart);
-      document.getElementById('cartOverlay').addEventListener('click', closeCart);
-      document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
-    }
+      // ===== SMOOTH SCROLL =====
+      // Function: initSmoothScroll()
+      // Purpose: Smooth-scroll all in-page anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          var href = this.getAttribute('href');
+          var target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    });
 
-    document.addEventListener('DOMContentLoaded', initBeerGaterPage);
+    window.addEventListener('scroll', function() {
+      updateScrollProgress();
+      updateHeaderShadow();
+    });
