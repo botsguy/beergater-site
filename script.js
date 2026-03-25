@@ -1,138 +1,195 @@
 // ===== SCROLL PROGRESS BAR =====
-    // Purpose: Update the top progress indicator as the user scrolls.
-    function updateScrollProgress() {
-      const scrolled = window.scrollY;
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      document.getElementById('scrollProgress').style.width = height > 0 ? `${(scrolled / height) * 100}%` : '0%';
+    // Function: updateProgressBar()
+    // Purpose: Update the fixed top progress indicator based on page scroll.
+    function updateProgressBar() {
+      var doc = document.documentElement;
+      var scrollTop = window.scrollY || doc.scrollTop;
+      var scrollHeight = doc.scrollHeight - doc.clientHeight;
+      var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      var bar = document.getElementById('progress-bar');
+      if (bar) bar.style.width = pct + '%';
     }
 
-    // ===== NAV SHADOW TOGGLE =====
-    // Purpose: Add a subtle shadow to the sticky header after scrolling.
+    // ===== NAV SHADOW ON SCROLL =====
+    // Function: updateNavShadow()
+    // Purpose: Add elevated shadow to sticky navigation after scrolling.
     function updateNavShadow() {
-      const header = document.getElementById('siteHeader');
-      header.classList.toggle('shadow-lg', window.scrollY > 8);
-      header.classList.toggle('shadow-black/20', window.scrollY > 8);
+      var header = document.getElementById('site-header');
+      if (!header) return;
+      if ((window.scrollY || 0) > 50) {
+        header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.35)';
+      } else {
+        header.style.boxShadow = 'none';
+      }
     }
 
     // ===== FADE-UP REVEAL OBSERVER =====
-    // Purpose: Reveal sections as they enter the viewport.
-    function initRevealObserver() {
-      const items = document.querySelectorAll('.fade-up');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('in-view');
+    // Function: initializeRevealObserver()
+    // Purpose: Reveal elements with .fade-up when they enter the viewport.
+    function initializeRevealObserver() {
+      var elements = document.querySelectorAll('.fade-up');
+      if (!('IntersectionObserver' in window)) {
+        elements.forEach(function(el){ el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
         });
-      }, { threshold: 0.12 });
-      items.forEach((item) => observer.observe(item));
+      }, { threshold: 0.14 });
+      elements.forEach(function(el){ observer.observe(el); });
     }
 
-    // ===== COUNT-UP STATS =====
-    // Purpose: Animate stat numbers when the stats section becomes visible.
-    function initCountUps() {
-      const stats = document.querySelectorAll('[data-count]');
-      if (!stats.length) return;
+    // ===== COUNT-UP ANIMATION =====
+    // Function: animateCountUp(el)
+    // Purpose: Animate numeric stats from 0 to target value using requestAnimationFrame.
+    function animateCountUp(el) {
+      var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+      var start = 0;
+      var duration = 1500;
+      var startTime = null;
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        el.textContent = Math.floor(progress * target);
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
     }
 
-    // ===== CART LOGIC =====
-    // Purpose: Open, close, and update the slide-out cart sidebar.
-    const cart = { items: [{ name: 'BeerGater Original System', price: 299.99, qty: 1 }], open: false };
-
-    function formatMoney(value) { return `$${value.toFixed(2)}`; }
-
+    // ===== CART STATE AND RENDERING =====
+    // Function: renderCart()
+    // Purpose: Update sidebar contents, total, and badge count from local cart state.
+    var cart = [];
     function renderCart() {
-      const list = document.getElementById('cartItems');
-      const subtotal = cart.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-      document.getElementById('cartSubtotal').textContent = formatMoney(subtotal);
-      document.getElementById('cart-count').textContent = cart.items.reduce((sum, item) => sum + item.qty, 0);
-      list.innerHTML = cart.items.map((item, i) => `
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <div class="flex justify-between gap-3">
-            <div>
-              <div class="font-semibold">${item.name}</div>
-              <div class="text-white/60 text-sm">${formatMoney(item.price)} × ${item.qty}</div>
-            </div>
-            <button class="text-white/50" onclick="removeCartItem(${i})">✕</button>
-          </div>
-        </div>
-      `).join('');
+      var itemsEl = document.getElementById('cartItems');
+      var countEl = document.getElementById('cart-count');
+      var totalEl = document.getElementById('cartTotal');
+      if (!itemsEl || !countEl || !totalEl) return;
+      itemsEl.innerHTML = cart.length ? cart.map(function(item) {
+        return '<div class="flex items-center gap-4 border rounded-2xl p-4"><img src="' + item.image + '" alt="" class="w-16 h-16 object-cover rounded-xl"><div class="flex-1"><div class="font-semibold">' + item.name + '</div><div class="text-sm text-slate-500">$' + item.price.toFixed(2) + '</div></div></div>';
+      }).join('') : '<div class="text-slate-500 py-10 text-center">Your cart is empty.</div>';
+      countEl.textContent = cart.length;
+      var total = cart.reduce(function(sum, item){ return sum + item.price; }, 0);
+      totalEl.textContent = '$' + total.toFixed(2);
     }
 
-    function removeCartItem(index) {
-      cart.items.splice(index, 1);
-      if (!cart.items.length) cart.items.push({ name: 'BeerGater Original System', price: 299.99, qty: 1 });
-      renderCart();
-    }
-
+    // ===== TOGGLE CART SIDEBAR =====
+    // Function: openCart()
+    // Purpose: Display cart sidebar and dim backdrop.
     function openCart() {
-      document.getElementById('cartSidebar').classList.add('open');
-      document.getElementById('cartOverlay').classList.add('open');
+      var sidebar = document.getElementById('cartSidebar');
+      var overlay = document.getElementById('cartOverlay');
+      if (sidebar) sidebar.style.transform = 'translateX(0)';
+      if (overlay) overlay.classList.remove('hidden');
     }
 
+    // Function: closeCart()
+    // Purpose: Hide cart sidebar and backdrop.
     function closeCart() {
-      document.getElementById('cartSidebar').classList.remove('open');
-      document.getElementById('cartOverlay').classList.remove('open');
+      var sidebar = document.getElementById('cartSidebar');
+      var overlay = document.getElementById('cartOverlay');
+      if (sidebar) sidebar.style.transform = 'translateX(100%)';
+      if (overlay) overlay.classList.add('hidden');
     }
 
-    // ===== CHECKOUT ACTION =====
-    // Purpose: Send buyer to the platform payment processor.
-    function checkoutCart() {
-      const email = prompt('Enter your email for checkout:');
-      if (!email) return;
-      window.__processPayment({
-        amountCents: Math.round(cart.items.reduce((sum, item) => sum + item.price * item.qty, 0) * 100),
-        email: email,
-        productName: 'BeerGater Original System',
-        productDescription: 'BeerGater tailgate tap system',
-        quantity: 1
-      });
+    // ===== TOAST FEEDBACK =====
+    // Function: showToast(message)
+    // Purpose: Briefly display a success message to the user.
+    function showToast(message) {
+      var toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(function() {
+        toast.classList.add('opacity-0');
+        toast.classList.remove('opacity-100');
+      }, 1800);
     }
 
-    // ===== VIDEO SOUND TOGGLE =====
-    // Purpose: Unmute and restart the background video when overlay is clicked.
-    function enableVideoSound() {
-      const video = document.getElementById('bgVideo');
-      const overlay = document.getElementById('soundOverlay');
-      video.muted = false;
-      video.currentTime = 0;
-      video.play();
-      overlay.style.display = 'none';
+    // ===== ADD TO CART HANDLER =====
+    // Function: addBeerGaterToCart()
+    // Purpose: Add the BeerGater kit to the in-page cart state.
+    function addBeerGaterToCart() {
+      cart.push({ name: 'The Original BeerGater Kit', price: 299.99, image: 'https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047' });
+      renderCart();
+      showToast('✓ BeerGater Kit added to cart!');
+      openCart();
     }
 
-    // ===== MOBILE SMOOTH SCROLL =====
-    // Purpose: Intercept internal anchor clicks and smooth-scroll.
-    function bindSmoothScroll() {
-      document.querySelectorAll('a[href^="#"]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          const target = document.querySelector(link.getAttribute('href'));
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // ===== VIDEO OVERLAY UNMUTE =====
+    // Function: initializeVideoOverlay()
+    // Purpose: Enable sound and restart the video when the overlay is clicked.
+    function initializeVideoOverlay() {
+      var bgVideo = document.getElementById('bgVideo');
+      var soundOverlay = document.getElementById('soundOverlay');
+      if (bgVideo && soundOverlay) {
+        soundOverlay.addEventListener('click', function() {
+          bgVideo.muted = false;
+          bgVideo.currentTime = 0;
+          bgVideo.play();
+          soundOverlay.style.display = 'none';
+        });
+      }
+    }
+
+    // ===== SMOOTH SCROLL =====
+    // Function: initializeSmoothScroll()
+    // Purpose: Smoothly scroll internal anchor links to their targets.
+    function initializeSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var targetId = this.getAttribute('href');
+          if (targetId.length > 1) {
+            var target = document.querySelector(targetId);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
           }
         });
       });
     }
 
-    // ===== OPEN TAP VOICE =====
-    // Purpose: Open voice agent directly in a popup window
-    function openTapVoice() { window.open('https://paymegpt.com/agents/82333694', 'TapVoice', 'width=440,height=700,left=' + Math.round(screen.width/2 - 220) + ',top=' + Math.round(screen.height/2 - 350) + ',scrollbars=no,resizable=yes'); }
+    // ===== CONTACT FORM SUCCESS MESSAGE =====
+    // Function: initializeContactForm()
+    // Purpose: Prevent default submission and show a green confirmation message.
+    function initializeContactForm() {
+      var form = document.getElementById('contactForm');
+      var success = document.getElementById('contactSuccess');
+      if (!form || !success) return;
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        success.classList.remove('hidden');
+      });
+    }
 
-    // ===== OPEN TAP CHAT =====
-    // Purpose: Trigger the native Paymegpt chat bubble to open
-    function openTapChat() { var btn = document.querySelector('[data-paymegpt-trigger], .paymegpt-bubble-btn, #paymegpt-bubble-button, .paymegpt-trigger'); if (btn) { btn.click(); } else { window.open('https://paymegpt.com/agents/82333694', 'TapChat', 'width=440,height=700,left=' + Math.round(screen.width/2 - 220) + ',top=' + Math.round(screen.height/2 - 350) + ',scrollbars=no,resizable=yes'); } }
-
-    // ===== DOM INITIALIZATION =====
-    // Purpose: Wire all interactions after the document is ready.
-    document.addEventListener('DOMContentLoaded', () => {
-      renderCart();
-      initRevealObserver();
-      bindSmoothScroll();
-      updateScrollProgress();
+    window.addEventListener('scroll', function() {
+      updateProgressBar();
       updateNavShadow();
-      document.getElementById('soundOverlay').addEventListener('click', enableVideoSound);
-      document.getElementById('cartOverlay').addEventListener('click', closeCart);
-      document.getElementById('closeCart').addEventListener('click', closeCart);
-      document.getElementById('addToCartBtn').addEventListener('click', openCart);
-      document.getElementById('buyNowBtn').addEventListener('click', checkoutCart);
-      document.getElementById('checkoutBtn').addEventListener('click', checkoutCart);
-      window.addEventListener('scroll', () => { updateScrollProgress(); updateNavShadow(); });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      updateProgressBar();
+      updateNavShadow();
+      initializeRevealObserver();
+      initializeVideoOverlay();
+      initializeSmoothScroll();
+      initializeContactForm();
+      document.querySelectorAll('.count-num').forEach(function(el) {
+        animateCountUp(el);
+      });
+      renderCart();
+      var addBtn = document.getElementById('addToCartBtn');
+      var cartIcon = document.getElementById('cart-icon');
+      var closeBtn = document.getElementById('closeCart');
+      var overlay = document.getElementById('cartOverlay');
+      if (addBtn) addBtn.addEventListener('click', addBeerGaterToCart);
+      if (cartIcon) cartIcon.addEventListener('click', openCart);
+      if (closeBtn) closeBtn.addEventListener('click', closeCart);
+      if (overlay) overlay.addEventListener('click', closeCart);
     });
