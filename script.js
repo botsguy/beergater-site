@@ -1,19 +1,105 @@
-const header=document.getElementById('siteHeader'), progress=document.getElementById('scrollProgress'), mobileToggle=document.getElementById('nav-menu-toggle'), mobileNav=document.getElementById('mobileNav'), hero=document.getElementById('heroParallax'), bubbleCanvas=document.getElementById('bubbleCanvas');
-    mobileToggle&&mobileToggle.addEventListener('click',()=>mobileNav.classList.toggle('hidden'));
-    const links=[...document.querySelectorAll('a[href^="#"]')]; links.forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); mobileNav&&mobileNav.classList.add('hidden');}}));
-    function handleScroll(){const y=window.scrollY, h=document.documentElement.scrollHeight-innerHeight; progress.style.width=(y/h*100)+'%'; header.classList.toggle('bg-[rgba(10,14,26,.78)]',y>20); header.classList.toggle('backdrop-blur-xl',y>20); header.classList.toggle('shadow-[0_10px_30px_rgba(0,0,0,.25)]',y>20); hero&& (hero.style.transform=`translateY(${y*.12}px)`);}
-    window.addEventListener('scroll',handleScroll,{passive:true}); handleScroll();
-    // ===== INTERSECTION OBSERVER REVEALS =====
-    // Purpose: Trigger all scroll animations when sections enter viewport
-    const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in'); if(entry.target.classList.contains('hero-line')) return; const nums=entry.target.querySelectorAll('[data-count]'); nums.forEach(el=>countUp(el)); const lines=document.querySelectorAll('.hero-line'); lines.forEach((l,i)=>setTimeout(()=>l.classList.add('in'),120*i)); const cards=entry.target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.zoom-in'); cards.forEach((el,i)=>setTimeout(()=>el.classList.add('in'),120*i)); const zoom=entry.target.querySelectorAll('.zoom-card'); zoom.forEach((el,i)=>setTimeout(()=>el.classList.add('in'),120*i));}}, {threshold:.18});
-    document.querySelectorAll('[data-section], .reveal, .reveal-left, .reveal-right, .zoom-in').forEach(el=>io.observe(el));
-    function countUp(el){if(el.dataset.done) return; el.dataset.done='1'; const target=parseInt(el.dataset.count,10), plus=el.textContent.includes('+'); let n=0, step=Math.max(1,Math.ceil(target/70)); const tick=()=>{n+=step; if(n>=target){el.textContent=target+(plus?'+':''); return;} el.textContent=n+(plus?'+':''); requestAnimationFrame(tick)}; tick();}
-    // ===== TYPED TEXT EFFECT =====
-    // Purpose: Cycle hero subheadline phrases for high-energy brand motion
-    const typedEl=document.getElementById('typedText'); const typedWords=['Game Days','Tailgates','Camping Trips','Backyard BBQs']; let wi=0, ci=0, del=false;
-    function typeLoop(){const word=typedWords[wi]; ci=del?ci-1:ci+1; typedEl.textContent=word.slice(0,ci); if(!del&&ci===word.length){del=true; setTimeout(typeLoop,1200); return;} if(del&&ci===0){del=false; wi=(wi+1)%typedWords.length;} setTimeout(typeLoop, del?45:85);} typeLoop();
-    // ===== CANVAS PARTICLE SYSTEM =====
-    // Purpose: Floating beer bubbles in hero using lightweight animated circles
-    const ctx=bubbleCanvas.getContext('2d'); let bubbles=[]; function resize(){bubbleCanvas.width=innerWidth*bdevicePixelRatio(); bubbleCanvas.height=innerHeight*bdevicePixelRatio(); ctx.setTransform(bdevicePixelRatio(),0,0,bdevicePixelRatio(),0,0); bubbles=Array.from({length:42},()=>mkBubble())} function bdevicePixelRatio(){return Math.min(devicePixelRatio||1,2)} function mkBubble(){return{ x:Math.random()*innerWidth, y:innerHeight+Math.random()*220, r:Math.random()*5+1.5, vy:Math.random()*1.15+.4, vx:(Math.random()-.5)*.25, a:Math.random()*.55+.15, c:Math.random()>.7?'243,156,18':'255,255,255' }} function draw(){ctx.clearRect(0,0,innerWidth,innerHeight); bubbles.forEach(b=>{b.y-=b.vy; b.x+=b.vx; if(b.y<-20) Object.assign(b,mkBubble(),{y:innerHeight+20}); ctx.beginPath(); ctx.fillStyle=`rgba(${b.c},${b.a})`; ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fill();}); requestAnimationFrame(draw)} addEventListener('resize',resize); resize(); draw();
-    // ===== CONTACT FORM SUCCESS STATE =====
-    const form=document.getElementById('contactForm'), success=document.getElementById('formSuccess'); form.addEventListener('submit',e=>{e.preventDefault(); success.classList.remove('hidden'); form.reset(); setTimeout(()=>success.classList.add('hidden'),5000);});
+// ===== SMOOTH NAV SHADOW / SCROLL PROGRESS =====
+    // Function: updateScrollUI()
+    // Purpose: Update scroll progress bar width and toggle nav shadow on scroll.
+    // Triggers: Window scroll events.
+    function updateScrollUI() {
+      var doc = document.documentElement;
+      var scrollTop = window.scrollY || doc.scrollTop || 0;
+      var scrollHeight = document.body.scrollHeight - window.innerHeight;
+      var progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      var bar = document.getElementById('progress-bar');
+      var nav = document.getElementById('site-nav');
+      if (bar) bar.style.width = Math.max(0, Math.min(100, progress)) + '%';
+      if (nav) nav.classList.toggle('scrolled', scrollTop > 50);
+    }
+
+    // ===== FADE-UP SCROLL REVEAL =====
+    // Function: revealOnView()
+    // Purpose: Add visible class to elements as they enter viewport.
+    // Triggers: IntersectionObserver with threshold 0.1.
+    function revealOnView() {
+      var items = document.querySelectorAll('.fade-up');
+      var observer = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      items.forEach(function(item) { observer.observe(item); });
+    }
+
+    // ===== COUNT-UP ANIMATION =====
+    // Function: animateCount(el)
+    // Purpose: Animate stat counters from 0 to target using requestAnimationFrame.
+    // Triggers: When .count-up element enters viewport.
+    function animateCount(el) {
+      var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+      var start = null;
+      var duration = 1500;
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        var progress = Math.min((timestamp - start) / duration, 1);
+        el.textContent = Math.floor(progress * target).toString();
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target.toString();
+      }
+      requestAnimationFrame(step);
+    }
+
+    // ===== COUNT-UP OBSERVER =====
+    // Function: observeCounters()
+    // Purpose: Trigger count-up animation once when counters appear in view.
+    // Triggers: IntersectionObserver on .count-up elements.
+    function observeCounters() {
+      var counters = document.querySelectorAll('.count-up');
+      var seen = new WeakSet();
+      var observer = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !seen.has(entry.target)) {
+            seen.add(entry.target);
+            animateCount(entry.target);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      counters.forEach(function(counter) { observer.observe(counter); });
+    }
+
+    // ===== CONTACT FORM HANDLER =====
+    // Function: handleContactSubmit(e)
+    // Purpose: Prevent default submit, hide form, and show success message.
+    // Triggers: Contact form submission.
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      var form = document.getElementById('contact-form');
+      var success = document.getElementById('contact-success');
+      if (form) form.classList.add('hidden');
+      if (success) success.classList.remove('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      revealOnView();
+      observeCounters();
+      updateScrollUI();
+
+      var form = document.getElementById('contact-form');
+      if (form) form.addEventListener('submit', handleContactSubmit);
+
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          var href = this.getAttribute('href');
+          if (href && href.length > 1) {
+            var target = document.querySelector(href);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      });
+    });
+
+    window.addEventListener('scroll', updateScrollUI, { passive: true });
+    window.addEventListener('resize', updateScrollUI, { passive: true });
