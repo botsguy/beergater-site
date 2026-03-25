@@ -1,64 +1,19 @@
-// ===== STICKY NAV SCROLL EFFECT =====
-    // Function: handleHeaderScroll()
-    // Purpose: Add a more opaque, premium look to the sticky navigation after scrolling.
-    function handleHeaderScroll() {
-      const header = document.getElementById('site-header');
-      if (window.scrollY > 12) header.classList.add('nav-scrolled');
-      else header.classList.remove('nav-scrolled');
-    }
-
-    // ===== SCROLL REVEAL ANIMATION =====
-    // Function: setupRevealObserver()
-    // Purpose: Reveal sections and cards with a smooth upward motion as they enter viewport.
-    function setupRevealObserver() {
-      const items = document.querySelectorAll('.reveal');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('show');
-        });
-      }, { threshold: 0.14 });
-      items.forEach(item => observer.observe(item));
-    }
-
-    // ===== VIDEO OVERLAY CONTROL =====
-    // Function: setupVideoOverlay()
-    // Purpose: Hide the play overlay once the inline video begins playing.
-    function setupVideoOverlay() {
-      const video = document.getElementById('beergaterVideo');
-      const overlay = document.getElementById('playOverlay');
-      if (!video || !overlay) return;
-
-      const hideOverlay = () => overlay.classList.add('hide');
-      const showOverlay = () => { if (video.paused) overlay.classList.remove('hide'); };
-
-      overlay.addEventListener('click', () => {
-        video.play();
-      });
-      video.addEventListener('play', hideOverlay);
-      video.addEventListener('pause', showOverlay);
-      video.addEventListener('ended', showOverlay);
-    }
-
-    // ===== CONTACT FORM HANDLER =====
-    // Function: setupContactForm()
-    // Purpose: Prevent default submission and provide a polished in-page confirmation.
-    function setupContactForm() {
-      const form = document.querySelector('.contact-form');
-      if (!form) return;
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const btn = form.querySelector('button[type="submit"]');
-        const original = btn.textContent;
-        btn.textContent = 'Message Sent!';
-        setTimeout(() => { btn.textContent = original; }, 2200);
-        form.reset();
-      });
-    }
-
-    window.addEventListener('scroll', handleHeaderScroll);
-    window.addEventListener('load', () => {
-      handleHeaderScroll();
-      setupRevealObserver();
-      setupVideoOverlay();
-      setupContactForm();
-    });
+const header=document.getElementById('siteHeader'), progress=document.getElementById('scrollProgress'), mobileToggle=document.getElementById('nav-menu-toggle'), mobileNav=document.getElementById('mobileNav'), hero=document.getElementById('heroParallax'), bubbleCanvas=document.getElementById('bubbleCanvas');
+    mobileToggle&&mobileToggle.addEventListener('click',()=>mobileNav.classList.toggle('hidden'));
+    const links=[...document.querySelectorAll('a[href^="#"]')]; links.forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); mobileNav&&mobileNav.classList.add('hidden');}}));
+    function handleScroll(){const y=window.scrollY, h=document.documentElement.scrollHeight-innerHeight; progress.style.width=(y/h*100)+'%'; header.classList.toggle('bg-[rgba(10,14,26,.78)]',y>20); header.classList.toggle('backdrop-blur-xl',y>20); header.classList.toggle('shadow-[0_10px_30px_rgba(0,0,0,.25)]',y>20); hero&& (hero.style.transform=`translateY(${y*.12}px)`);}
+    window.addEventListener('scroll',handleScroll,{passive:true}); handleScroll();
+    // ===== INTERSECTION OBSERVER REVEALS =====
+    // Purpose: Trigger all scroll animations when sections enter viewport
+    const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in'); if(entry.target.classList.contains('hero-line')) return; const nums=entry.target.querySelectorAll('[data-count]'); nums.forEach(el=>countUp(el)); const lines=document.querySelectorAll('.hero-line'); lines.forEach((l,i)=>setTimeout(()=>l.classList.add('in'),120*i)); const cards=entry.target.querySelectorAll('.reveal,.reveal-left,.reveal-right,.zoom-in'); cards.forEach((el,i)=>setTimeout(()=>el.classList.add('in'),120*i)); const zoom=entry.target.querySelectorAll('.zoom-card'); zoom.forEach((el,i)=>setTimeout(()=>el.classList.add('in'),120*i));}}, {threshold:.18});
+    document.querySelectorAll('[data-section], .reveal, .reveal-left, .reveal-right, .zoom-in').forEach(el=>io.observe(el));
+    function countUp(el){if(el.dataset.done) return; el.dataset.done='1'; const target=parseInt(el.dataset.count,10), plus=el.textContent.includes('+'); let n=0, step=Math.max(1,Math.ceil(target/70)); const tick=()=>{n+=step; if(n>=target){el.textContent=target+(plus?'+':''); return;} el.textContent=n+(plus?'+':''); requestAnimationFrame(tick)}; tick();}
+    // ===== TYPED TEXT EFFECT =====
+    // Purpose: Cycle hero subheadline phrases for high-energy brand motion
+    const typedEl=document.getElementById('typedText'); const typedWords=['Game Days','Tailgates','Camping Trips','Backyard BBQs']; let wi=0, ci=0, del=false;
+    function typeLoop(){const word=typedWords[wi]; ci=del?ci-1:ci+1; typedEl.textContent=word.slice(0,ci); if(!del&&ci===word.length){del=true; setTimeout(typeLoop,1200); return;} if(del&&ci===0){del=false; wi=(wi+1)%typedWords.length;} setTimeout(typeLoop, del?45:85);} typeLoop();
+    // ===== CANVAS PARTICLE SYSTEM =====
+    // Purpose: Floating beer bubbles in hero using lightweight animated circles
+    const ctx=bubbleCanvas.getContext('2d'); let bubbles=[]; function resize(){bubbleCanvas.width=innerWidth*bdevicePixelRatio(); bubbleCanvas.height=innerHeight*bdevicePixelRatio(); ctx.setTransform(bdevicePixelRatio(),0,0,bdevicePixelRatio(),0,0); bubbles=Array.from({length:42},()=>mkBubble())} function bdevicePixelRatio(){return Math.min(devicePixelRatio||1,2)} function mkBubble(){return{ x:Math.random()*innerWidth, y:innerHeight+Math.random()*220, r:Math.random()*5+1.5, vy:Math.random()*1.15+.4, vx:(Math.random()-.5)*.25, a:Math.random()*.55+.15, c:Math.random()>.7?'243,156,18':'255,255,255' }} function draw(){ctx.clearRect(0,0,innerWidth,innerHeight); bubbles.forEach(b=>{b.y-=b.vy; b.x+=b.vx; if(b.y<-20) Object.assign(b,mkBubble(),{y:innerHeight+20}); ctx.beginPath(); ctx.fillStyle=`rgba(${b.c},${b.a})`; ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fill();}); requestAnimationFrame(draw)} addEventListener('resize',resize); resize(); draw();
+    // ===== CONTACT FORM SUCCESS STATE =====
+    const form=document.getElementById('contactForm'), success=document.getElementById('formSuccess'); form.addEventListener('submit',e=>{e.preventDefault(); success.classList.remove('hidden'); form.reset(); setTimeout(()=>success.classList.add('hidden'),5000);});
