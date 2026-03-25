@@ -1,38 +1,18 @@
-/* ===== GLOBAL BASE STYLES ===== */
-    body { font-family: 'Inter', sans-serif; background: #0a0e1a; color: #e5e7eb; overflow-x: hidden; }
-    .font-oswald { font-family: 'Oswald', sans-serif; }
-    html { scroll-behavior: smooth; }
-    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+html { scroll-behavior: smooth; }
+    body { font-family: Inter, system-ui, sans-serif; }
+    .oswald { font-family: 'Oswald', sans-serif; }
+    @keyframes floatAnim { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    .float-anim { animation: floatAnim 4.5s ease-in-out infinite; }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: all .6s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    /* ===== SCROLL PROGRESS BAR ===== */
-    #scrollProgress { position: fixed; top: 0; left: 0; height: 4px; width: 0%; z-index: 9999; background: linear-gradient(90deg, #ef4444, #b91c1c); }
-
-    /* ===== HERO IMAGE FLOAT ===== */
-    .hero-float { animation: float 6s ease-in-out infinite; }
-    @keyframes float { 0%,100%{ transform: translateY(0px);} 50%{ transform: translateY(-18px);} }
-
-    /* ===== RED GLOW ACCENT ===== */
-    .red-glow { box-shadow: 0 0 45px rgba(239,68,68,.35), 0 0 100px rgba(239,68,68,.18); }
-
-    /* ===== COUNT STAT STYLE ===== */
-    .count-num { text-shadow: 0 0 16px rgba(255,255,255,.16); }
-
-    /* ===== CART SIDEBAR ===== */
-    #cartSidebar { transform: translateX(100%); transition: transform .35s ease; }
-    #cartSidebar.open { transform: translateX(0); }
-
-    /* ===== TOAST NOTIFICATION ===== */
-    #toast { transform: translateY(20px); opacity: 0; transition: all .35s ease; }
-    #toast.show { transform: translateY(0); opacity: 1; }
-
-    /* ===== TAP BUTTON ===== */
-    #tap-btn { position: fixed; bottom: 28px; right: 28px; z-index: 99999; display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #C0392B, #8B0000); color: white; border: none; border-radius: 50px; padding: 15px 24px; font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; box-shadow: 0 8px 32px rgba(192,57,43,0.55); animation: tapPulse 2.5s ease-in-out infinite; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    #tap-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 14px 40px rgba(192,57,43,0.7); animation: none; }
-    .tap-emoji { font-size: 20px; display: inline-block; animation: wiggle 3s ease-in-out infinite; }
-    .tap-text { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
-    @keyframes tapPulse { 0%, 100% { box-shadow: 0 8px 32px rgba(192,57,43,0.55), 0 0 0 0 rgba(192,57,43,0.35); } 50% { box-shadow: 0 8px 32px rgba(192,57,43,0.55), 0 0 0 14px rgba(192,57,43,0); } }
-    @keyframes wiggle { 0%,100% { transform: rotate(0deg); } 20% { transform: rotate(-14deg); } 40% { transform: rotate(14deg); } 60% { transform: rotate(-7deg); } 80% { transform: rotate(7deg); } }
-
-    /* ===== SECTION CARD / BADGE HELPERS ===== */
-    .glass { background: rgba(255,255,255,.07); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.08); }
+    .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    @media (max-width: 1024px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 640px) { .card-grid { grid-template-columns: repeat(1, minmax(0, 1fr)); } }
+    /* ===== FLOATING TAP BUTTONS ===== */
+    #float-stack { position: fixed; bottom: 28px; right: 28px; z-index: 99999; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; pointer-events: none; }
+    #float-stack > * { pointer-events: all; }
+    .float-btn { display: flex; align-items: center; gap: 10px; border: none; border-radius: 50px; padding: 14px 22px; font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease; text-decoration: none; }
+    .float-btn:hover { transform: translateY(-3px); }
+    #btn-chat { background: linear-gradient(135deg, #C0392B, #8B0000); color: white; box-shadow: 0 8px 28px rgba(192,57,43,0.5); animation: btnPulse 2.5s ease-in-out infinite; }
+    #btn-voice { background: #0a0e1a; color: white; border: 2px solid rgba(192,57,43,0.5); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+    @keyframes btnPulse { 0%,100% { box-shadow: 0 8px 28px rgba(192,57,43,0.5), 0 0 0 0 rgba(192,57,43,0.3); } 50% { box-shadow: 0 8px 28px rgba(192,57,43,0.5), 0 0 0 12px rgba(192,57,43,0); } }
