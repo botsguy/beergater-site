@@ -1,195 +1,169 @@
 // ===== SCROLL PROGRESS BAR =====
-    // Function: updateProgressBar()
-    // Purpose: Update the fixed top progress indicator based on page scroll.
-    function updateProgressBar() {
-      var doc = document.documentElement;
-      var scrollTop = window.scrollY || doc.scrollTop;
-      var scrollHeight = doc.scrollHeight - doc.clientHeight;
-      var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-      var bar = document.getElementById('progress-bar');
-      if (bar) bar.style.width = pct + '%';
+    // Function: updateScrollProgress()
+    // Purpose: Update the red top progress bar based on page scroll position.
+    function updateScrollProgress() {
+      const progress = document.getElementById('scrollProgress');
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progress.style.width = value + '%';
     }
 
     // ===== NAV SHADOW ON SCROLL =====
     // Function: updateNavShadow()
-    // Purpose: Add elevated shadow to sticky navigation after scrolling.
+    // Purpose: Add subtle shadow to sticky nav when the page is scrolled.
     function updateNavShadow() {
-      var header = document.getElementById('site-header');
-      if (!header) return;
-      if ((window.scrollY || 0) > 50) {
-        header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.35)';
-      } else {
-        header.style.boxShadow = 'none';
-      }
+      const header = document.querySelector('header');
+      header.classList.toggle('shadow-lg', window.scrollY > 10);
     }
 
-    // ===== FADE-UP REVEAL OBSERVER =====
-    // Function: initializeRevealObserver()
-    // Purpose: Reveal elements with .fade-up when they enter the viewport.
-    function initializeRevealObserver() {
-      var elements = document.querySelectorAll('.fade-up');
-      if (!('IntersectionObserver' in window)) {
-        elements.forEach(function(el){ el.classList.add('visible'); });
-        return;
-      }
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
+    // ===== FADE-UP OBSERVER =====
+    // Function: initFadeUpObserver()
+    // Purpose: Reveal content blocks smoothly as they enter the viewport.
+    function initFadeUpObserver() {
+      const items = document.querySelectorAll('.fade-up');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('in-view');
         });
-      }, { threshold: 0.14 });
-      elements.forEach(function(el){ observer.observe(el); });
+      }, { threshold: 0.15 });
+      items.forEach(item => observer.observe(item));
     }
 
     // ===== COUNT-UP ANIMATION =====
-    // Function: animateCountUp(el)
-    // Purpose: Animate numeric stats from 0 to target value using requestAnimationFrame.
-    function animateCountUp(el) {
-      var target = parseInt(el.getAttribute('data-target'), 10) || 0;
-      var start = 0;
-      var duration = 1500;
-      var startTime = null;
-      function step(timestamp) {
-        if (!startTime) startTime = timestamp;
-        var progress = Math.min((timestamp - startTime) / duration, 1);
-        el.textContent = Math.floor(progress * target);
-        if (progress < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
+    // Function: animateCounters()
+    // Purpose: Animate stat numbers from zero to their target values.
+    function animateCounters() {
+      const counters = document.querySelectorAll('.counter');
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'), 10);
+        let current = 0;
+        const step = Math.max(1, Math.ceil(target / 60));
+        const tick = () => {
+          current += step;
+          if (current >= target) {
+            counter.textContent = target;
+            return;
+          }
+          counter.textContent = current;
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
     }
 
-    // ===== CART STATE AND RENDERING =====
+    // ===== CART STATE =====
     // Function: renderCart()
-    // Purpose: Update sidebar contents, total, and badge count from local cart state.
-    var cart = [];
+    // Purpose: Update cart UI, counts, and totals from in-memory state.
+    const cart = { items: [{ name: 'BeerGater Portable Kegerator Tap', price: 299.99, qty: 1 }] };
     function renderCart() {
-      var itemsEl = document.getElementById('cartItems');
-      var countEl = document.getElementById('cart-count');
-      var totalEl = document.getElementById('cartTotal');
-      if (!itemsEl || !countEl || !totalEl) return;
-      itemsEl.innerHTML = cart.length ? cart.map(function(item) {
-        return '<div class="flex items-center gap-4 border rounded-2xl p-4"><img src="' + item.image + '" alt="" class="w-16 h-16 object-cover rounded-xl"><div class="flex-1"><div class="font-semibold">' + item.name + '</div><div class="text-sm text-slate-500">$' + item.price.toFixed(2) + '</div></div></div>';
-      }).join('') : '<div class="text-slate-500 py-10 text-center">Your cart is empty.</div>';
-      countEl.textContent = cart.length;
-      var total = cart.reduce(function(sum, item){ return sum + item.price; }, 0);
-      totalEl.textContent = '$' + total.toFixed(2);
-    }
-
-    // ===== TOGGLE CART SIDEBAR =====
-    // Function: openCart()
-    // Purpose: Display cart sidebar and dim backdrop.
-    function openCart() {
-      var sidebar = document.getElementById('cartSidebar');
-      var overlay = document.getElementById('cartOverlay');
-      if (sidebar) sidebar.style.transform = 'translateX(0)';
-      if (overlay) overlay.classList.remove('hidden');
-    }
-
-    // Function: closeCart()
-    // Purpose: Hide cart sidebar and backdrop.
-    function closeCart() {
-      var sidebar = document.getElementById('cartSidebar');
-      var overlay = document.getElementById('cartOverlay');
-      if (sidebar) sidebar.style.transform = 'translateX(100%)';
-      if (overlay) overlay.classList.add('hidden');
-    }
-
-    // ===== TOAST FEEDBACK =====
-    // Function: showToast(message)
-    // Purpose: Briefly display a success message to the user.
-    function showToast(message) {
-      var toast = document.getElementById('toast');
-      if (!toast) return;
-      toast.textContent = message;
-      toast.classList.remove('opacity-0');
-      toast.classList.add('opacity-100');
-      setTimeout(function() {
-        toast.classList.add('opacity-0');
-        toast.classList.remove('opacity-100');
-      }, 1800);
-    }
-
-    // ===== ADD TO CART HANDLER =====
-    // Function: addBeerGaterToCart()
-    // Purpose: Add the BeerGater kit to the in-page cart state.
-    function addBeerGaterToCart() {
-      cart.push({ name: 'The Original BeerGater Kit', price: 299.99, image: 'https://beergater.com/cdn/shop/files/BG_10.webp?v=1772902047' });
-      renderCart();
-      showToast('✓ BeerGater Kit added to cart!');
-      openCart();
-    }
-
-    // ===== VIDEO OVERLAY UNMUTE =====
-    // Function: initializeVideoOverlay()
-    // Purpose: Enable sound and restart the video when the overlay is clicked.
-    function initializeVideoOverlay() {
-      var bgVideo = document.getElementById('bgVideo');
-      var soundOverlay = document.getElementById('soundOverlay');
-      if (bgVideo && soundOverlay) {
-        soundOverlay.addEventListener('click', function() {
-          bgVideo.muted = false;
-          bgVideo.currentTime = 0;
-          bgVideo.play();
-          soundOverlay.style.display = 'none';
-        });
+      const cartItems = document.getElementById('cartItems');
+      const cartCount = document.getElementById('cart-count');
+      const cartTotal = document.getElementById('cartTotal');
+      const emptyCartText = document.getElementById('emptyCartText');
+      const totalQty = cart.items.reduce((sum, item) => sum + item.qty, 0);
+      const total = cart.items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      cartCount.textContent = totalQty;
+      cartTotal.textContent = '$' + total.toFixed(2);
+      cartItems.innerHTML = '';
+      if (!cart.items.length) {
+        cartItems.appendChild(emptyCartText);
+        return;
       }
+      cart.items.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-4 border border-slate-200 rounded-2xl p-4';
+        row.innerHTML = '<div><div class="font-semibold">' + item.name + '</div><div class="text-sm text-slate-500">Qty ' + item.qty + '</div></div><div class="text-right"><div class="font-semibold">$' + item.price.toFixed(2) + '</div><button class="text-sm text-[#c0392b]" data-remove="' + index + '">Remove</button></div>';
+        cartItems.appendChild(row);
+      });
+      cartItems.querySelectorAll('[data-remove]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          cart.items.splice(parseInt(e.currentTarget.getAttribute('data-remove'), 10), 1);
+          renderCart();
+        });
+      });
+    }
+
+    // ===== CART TOGGLE =====
+    // Function: openCart()/closeCart()
+    // Purpose: Show and hide the slide-out cart drawer and overlay.
+    function openCart() {
+      document.getElementById('cartSidebar').classList.remove('translate-x-full');
+      const overlay = document.getElementById('cartOverlay');
+      overlay.classList.remove('pointer-events-none', 'opacity-0');
+      overlay.classList.add('opacity-100');
+    }
+    function closeCart() {
+      document.getElementById('cartSidebar').classList.add('translate-x-full');
+      const overlay = document.getElementById('cartOverlay');
+      overlay.classList.add('pointer-events-none', 'opacity-0');
+      overlay.classList.remove('opacity-100');
+    }
+
+    // ===== VIDEO SOUND OVERLAY =====
+    // Function: enableVideoSound()
+    // Purpose: Unmute and replay the hero demo video when overlay is clicked.
+    function enableVideoSound() {
+      const bgVideo = document.getElementById('bgVideo');
+      const soundOverlay = document.getElementById('soundOverlay');
+      bgVideo.muted = false;
+      bgVideo.currentTime = 0;
+      bgVideo.play();
+      soundOverlay.style.display = 'none';
     }
 
     // ===== SMOOTH SCROLL =====
-    // Function: initializeSmoothScroll()
-    // Purpose: Smoothly scroll internal anchor links to their targets.
-    function initializeSmoothScroll() {
-      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-          var targetId = this.getAttribute('href');
-          if (targetId.length > 1) {
-            var target = document.querySelector(targetId);
-            if (target) {
-              e.preventDefault();
-              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+    // Function: bindSmoothScroll()
+    // Purpose: Ensure anchor navigation scrolls smoothly across the page.
+    function bindSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+          const id = link.getAttribute('href');
+          if (id.length > 1) {
+            e.preventDefault();
+            document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         });
       });
     }
 
-    // ===== CONTACT FORM SUCCESS MESSAGE =====
-    // Function: initializeContactForm()
-    // Purpose: Prevent default submission and show a green confirmation message.
-    function initializeContactForm() {
-      var form = document.getElementById('contactForm');
-      var success = document.getElementById('contactSuccess');
-      if (!form || !success) return;
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        success.classList.remove('hidden');
+    // ===== INIT =====
+    // Function: initPage()
+    // Purpose: Wire up all interactions after DOM loads.
+    function initPage() {
+      updateScrollProgress();
+      updateNavShadow();
+      initFadeUpObserver();
+      animateCounters();
+      renderCart();
+      bindSmoothScroll();
+
+      window.addEventListener('scroll', () => {
+        updateScrollProgress();
+        updateNavShadow();
+      });
+
+      document.getElementById('cartBtn').addEventListener('click', openCart);
+      document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+      document.getElementById('cartOverlay').addEventListener('click', closeCart);
+      document.getElementById('soundOverlay').addEventListener('click', enableVideoSound);
+
+      document.getElementById('addToCartBtn').addEventListener('click', () => {
+        cart.items = [{ name: 'BeerGater Portable Kegerator Tap', price: 299.99, qty: 1 }];
+        renderCart();
+        openCart();
+      });
+
+      document.getElementById('checkoutBtn').addEventListener('click', () => {
+        window.__processPayment({
+          amountCents: 29999,
+          email: '',
+          productName: 'BeerGater Portable Kegerator Tap',
+          productDescription: 'The original tailgate experience',
+          name: '',
+          quantity: 1
+        });
       });
     }
 
-    window.addEventListener('scroll', function() {
-      updateProgressBar();
-      updateNavShadow();
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-      updateProgressBar();
-      updateNavShadow();
-      initializeRevealObserver();
-      initializeVideoOverlay();
-      initializeSmoothScroll();
-      initializeContactForm();
-      document.querySelectorAll('.count-num').forEach(function(el) {
-        animateCountUp(el);
-      });
-      renderCart();
-      var addBtn = document.getElementById('addToCartBtn');
-      var cartIcon = document.getElementById('cart-icon');
-      var closeBtn = document.getElementById('closeCart');
-      var overlay = document.getElementById('cartOverlay');
-      if (addBtn) addBtn.addEventListener('click', addBeerGaterToCart);
-      if (cartIcon) cartIcon.addEventListener('click', openCart);
-      if (closeBtn) closeBtn.addEventListener('click', closeCart);
-      if (overlay) overlay.addEventListener('click', closeCart);
-    });
+    document.addEventListener('DOMContentLoaded', initPage);
